@@ -25,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mont.variable} ${mont_alt.variable} antialiased`}>
+      <body
+        className={`${mont.variable} ${mont_alt.variable} antialiased dark`}
+      >
         {children}
       </body>
     </html>
