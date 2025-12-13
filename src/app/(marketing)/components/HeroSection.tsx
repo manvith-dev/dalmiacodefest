@@ -19,7 +19,7 @@ export default function HeroSection() {
         height={164}
       />
 
-      <div className="flex flex-row py-8 p-16 w-full">
+      <div className="flex flex-row py-8 px-16 w-full">
         <div className="flex flex-1 flex-col gap-4 py-16">
           <H1 className="">DALMIA CODE FEST</H1>
 

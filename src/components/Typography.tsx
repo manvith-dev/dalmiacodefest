@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   className?: string;
-  children: string;
+  children: React.ReactNode;
 }
 
 const H1: React.FC<Props> = ({ className, children }) => {
@@ -38,7 +38,7 @@ const H3: React.FC<Props> = ({ className, children }) => {
 const H4: React.FC<Props> = ({ className, children }) => {
   return (
     <h4
-      className={`scroll-m-20 text-xl font-semibold tracking-tight ${className}`}
+      className={`scroll-m-20 text-lg font-semibold tracking-tight ${className}`}
     >
       {children}
     </h4>

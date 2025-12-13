@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { ButtonGroup } from "@/components/ui/button-group";
 
-import { ModeToggle } from "@/components/ui/mode-toggle";
-
 import { Button } from "@/components/ui/button";
 
 import {
@@ -26,16 +24,16 @@ export function Navbar() {
           <NavigationMenuItem className="flex flex-row items-center gap-4">
             <H3>DCF</H3>
             <NavigationMenuLink asChild className="hover:bg-transparent">
-              <Link href="/docs">Home</Link>
+              <Link href="/">Home</Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild className="hover:bg-transparent">
-              <Link href="/docs">About</Link>
+              <Link href="#about">About</Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild className="hover:bg-transparent">
-              <Link href="/docs">Need help?</Link>
+              <Link href="#rules">Rules</Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild className="hover:bg-transparent">
-              <Link href="/docs">Contact</Link>
+              <Link href="#contact">Contact</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
