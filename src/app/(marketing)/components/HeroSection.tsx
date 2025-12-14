@@ -2,17 +2,8 @@
 
 import Image from "next/image";
 import { Navbar } from "./Navbar";
-import {
-  H1,
-  H2,
-  H3,
-  H4,
-  InlineCode,
-  Lead,
-  Muted,
-  P,
-} from "@/components/Typography";
-
+import { H1, H2, Lead, Muted, P } from "@/components/Typography";
+import { EVENT } from "@/config/event";
 import {
   Tooltip,
   TooltipContent,
@@ -26,11 +17,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const Data = {
-  title: "DALMIA CODE FEST 1.0",
-  tagline: "The Code Fu League",
-  description:
-    "A three-round tech challenge where teams battle through, rapid-fire logic, design, and real coding. Built to test how fast you think, how well you create, and how smart you solve",
-  date: "30th January, 2026",
   time: "9:00 AM - 12:00 PM",
   location: "PDLC, Mumbai",
   map_link: "https://maps.app.goo.gl/mXsyMt9KEBXHqfhy8",
@@ -38,8 +24,10 @@ const Data = {
 
 export default function HeroSection() {
   const [timeLeft, setTimeLeft] = useState("");
+  const eventDate = new Date(EVENT.date);
+
   useEffect(() => {
-    const eventDate = new Date("January 30, 2026 09:00:00").getTime();
+    const eventDate = new Date(EVENT.date).getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -83,18 +71,24 @@ export default function HeroSection() {
       <div className="flex flex-col md:flex-row w-full">
         <div className="flex flex-1 flex-col gap-6 py-4 md:py-16">
           <div className="flex flex-col gap-1">
-            <H1>{Data.title}</H1>
-            <H2>{Data.tagline}</H2>
-            <P>{Data.description}</P>
+            <H1>{EVENT.name}</H1>
+            <H2>{EVENT.tagline}</H2>
+            <P>{EVENT.description}</P>
           </div>
           <div className="flex flex-col sm:flex-row">
             <div className="flex flex-1 items-center gap-2">
               <Calendar className="text-primary w-4 h-4" />
-              <P>{Data.date}</P>
+              <P>
+                {eventDate.toLocaleDateString("en-IN", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </P>
             </div>
             <div className="flex flex-1 items-center gap-2">
               <Clock className="text-primary w-4 h-4" />
-              <P>{Data.time}</P>
+              <P>{EVENT.time}</P>
             </div>
             <Tooltip>
               <TooltipTrigger>

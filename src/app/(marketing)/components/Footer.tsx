@@ -1,6 +1,9 @@
 import { H3, H4, Muted } from "@/components/Typography";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { EVENT } from "@/config/event";
+
+const eventDate = new Date(EVENT.date);
 
 const footerData = {
   brand: "DCF",
@@ -16,8 +19,12 @@ const footerData = {
   },
   time: {
     title: "When?",
-    date: "30th January, 2026",
-    hours: "9:00 AM - 12:00 PM",
+    date: eventDate.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }),
+    hours: EVENT.time,
   },
   sections: [
     {

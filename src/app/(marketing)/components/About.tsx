@@ -1,14 +1,15 @@
-import { H1, H2, H3, P } from "@/components/Typography";
+import { H2, H3, P } from "@/components/Typography";
 
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { GAMES } from "@/config/event";
 
 export default function About() {
   return (
@@ -27,36 +28,20 @@ export default function About() {
         <H3>Games</H3>
         <div className="flex flex-col md:flex-row gap-4">
           <RoundCard
-            title="Quiz Round"
-            description="Fast-paced elimination quiz"
-            rules={[
-              "Individual answers only",
-              "No negative marking",
-              "Top teams qualify",
-              "Time-limited questions",
-            ]}
+            title={GAMES.round1.name}
+            description={GAMES.round1.description}
+            rules={GAMES.round1.rules}
           />
 
           <RoundCard
-            title="Debug Round"
-            description="Find and fix broken code"
-            rules={[
-              "Fix errors only",
-              "Do not rewrite logic",
-              "Language is predefined",
-              "Time penalty for wrong fixes",
-            ]}
+            title={GAMES.round2.name}
+            description={GAMES.round2.description}
+            rules={GAMES.round2.rules}
           />
-
           <RoundCard
-            title="Coding Challenge"
-            description="Logic-based programming task"
-            rules={[
-              "Exact output matters",
-              "No internet access",
-              "Any logical approach allowed",
-              "Judged on correctness",
-            ]}
+            title={GAMES.round3.name}
+            description={GAMES.round3.description}
+            rules={GAMES.round3.rules}
           />
         </div>
       </div>
