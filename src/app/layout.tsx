@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Montserrat,
-  Montserrat_Alternates,
-  Google_Sans_Code,
-} from "next/font/google";
+import { Montserrat, Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
 
 const mont = Montserrat({
@@ -14,12 +10,6 @@ const mont = Montserrat({
 const mont_alt = Montserrat_Alternates({
   variable: "--font-mont-alt",
   weight: "400",
-  subsets: ["latin"],
-});
-
-const google_sans_code = Google_Sans_Code({
-  variable: "--font-google-sans-code",
-  weight: "500",
   subsets: ["latin"],
 });
 
@@ -35,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${mont.variable} ${mont_alt.variable} ${google_sans_code.variable} antialiased`}
-      >
+      <body className={`${mont.variable} ${mont_alt.variable} antialiased`}>
         {children}
       </body>
     </html>

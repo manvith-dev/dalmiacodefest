@@ -92,7 +92,7 @@ export default function Footer() {
           </div>
         ))}
       </div>
-      <div className="flex flex-row gap-2 items-center">
+      <div className="flex flex-col sm:flex-row gap-2 items-center">
         <Muted>{`© ${year} Dalmia Code Fest v1.0`}</Muted>
         <Separator orientation="vertical" />
         <Link
