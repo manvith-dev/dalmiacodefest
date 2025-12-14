@@ -8,7 +8,7 @@ interface Props {
 const H1: React.FC<Props> = ({ className, children }) => {
   return (
     <h1
-      className={`font-mont-alt scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl ${className}`}
+      className={`font-mont scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl ${className}`}
     >
       {children}
     </h1>
@@ -46,11 +46,7 @@ const H4: React.FC<Props> = ({ className, children }) => {
 };
 
 const P: React.FC<Props> = ({ className, children }) => {
-  return (
-    <p className={`leading-7 [&:not(:first-child)]:mt-6 ${className}`}>
-      {children}
-    </p>
-  );
+  return <p className={`leading-7 ${className}`}>{children}</p>;
 };
 
 const Blockquote: React.FC<Props> = ({ className, children }) => {

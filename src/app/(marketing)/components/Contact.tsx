@@ -14,7 +14,7 @@ export default function Contact() {
   return (
     <section id="contact" className="flex flex-col p-16 gap-4">
       <H2>Contact</H2>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-col md:flex-row gap-4">
         <ContactCard
           name="Manvith Poojary"
           role="student"

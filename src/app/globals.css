@@ -8,6 +8,7 @@
   --color-foreground: var(--foreground);
   --font-mont: var(--font-mont);
   --font-mont-alt: var(--font-mont-alt);
+  --font-google-sans-code: var(--font-google-sans-code);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -43,7 +44,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-:root {
+.light {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -79,7 +80,8 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
+:root {
+  --radius: 0.65rem;
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --grid-color: oklch(98.511% 0.00011 271.152 / 0.150);

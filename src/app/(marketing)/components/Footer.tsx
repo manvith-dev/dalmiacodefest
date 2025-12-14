@@ -1,4 +1,5 @@
 import { H3, H4, Muted } from "@/components/Typography";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 const footerData = {
@@ -11,37 +12,33 @@ const footerData = {
       "Malad (W), Maharashtra",
       "400064",
     ],
-    mapLink: "/",
+    mapLink: "https://maps.app.goo.gl/mXsyMt9KEBXHqfhy8",
   },
   time: {
     title: "When?",
     date: "30th January, 2026",
-    hours: "9:00 AM - 12:00 AM",
+    hours: "9:00 AM - 12:00 PM",
   },
   sections: [
     {
       title: "Quick Links",
       links: [
         { label: "Home", href: "/" },
-        { label: "About", href: "/" },
-        { label: "Need Help?", href: "/" },
-        { label: "Contact", href: "/" },
-        { label: "Register", href: "/" },
+        { label: "About", href: "#about" },
+        { label: "Rules", href: "#rules" },
+        { label: "Contact", href: "#contact" },
+        { label: "Register", href: "/register" },
       ],
     },
     {
       title: "Social",
       links: [
-        { label: "dalmialionscollege.ac.in", href: "/" },
-        { label: "Instagram", href: "/" },
-        { label: "Facebook", href: "/" },
-      ],
-    },
-    {
-      title: "Legal Links",
-      links: [
-        { label: "Privacy Policy", href: "/" },
-        { label: "Terms & Conditions", href: "/" },
+        {
+          label: "dalmialionscollege.ac.in",
+          href: "https://dalmialionscollege.ac.in/",
+        },
+        { label: "Instagram", href: "https://www.instagram.com/pdlcdlita" },
+        { label: "Facebook", href: "https://www.facebook.com/pdlcdlita" },
       ],
     },
   ],
@@ -67,6 +64,8 @@ export default function Footer() {
           <Link
             className="text-sm underline"
             href={footerData.location.mapLink}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             view on map
           </Link>
@@ -93,7 +92,23 @@ export default function Footer() {
           </div>
         ))}
       </div>
-      <Muted>{`© ${year} Dalmia Code Fest v1.0`}</Muted>
+      <div className="flex flex-row gap-2 items-center">
+        <Muted>{`© ${year} Dalmia Code Fest v1.0`}</Muted>
+        <Separator orientation="vertical" />
+        <Link
+          className="text-sm underline underline-offset-4"
+          href={"/pages/privacy"}
+        >
+          Privacy Policy
+        </Link>
+        <Separator orientation="vertical" />
+        <Link
+          className="text-sm underline underline-offset-4"
+          href={"/pages/terms"}
+        >
+          Terms & Conditions
+        </Link>
+      </div>
     </footer>
   );
 }
