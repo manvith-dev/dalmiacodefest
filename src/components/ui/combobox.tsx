@@ -44,7 +44,7 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="justify-between"
+          className="overflow-hidden text-ellipsis justify-between"
         >
           {value
             ? list.find((item) => item.value === value)?.label

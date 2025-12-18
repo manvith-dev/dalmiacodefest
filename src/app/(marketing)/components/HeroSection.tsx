@@ -108,7 +108,9 @@ export default function HeroSection() {
             </Tooltip>
           </div>
           <div className="flex flex-row gap-2">
-            <Button variant="default">Register Now</Button>
+            <Link href="/register">
+              <Button variant="default">Register Now</Button>
+            </Link>
             <Button variant="outline">Read More</Button>
           </div>
         </div>
