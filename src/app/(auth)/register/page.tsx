@@ -1,280 +1,233 @@
 "use client";
 
-import * as React from "react";
-import { useForm } from "@tanstack/react-form";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { H2, Muted } from "@/components/Typography";
 import { toast } from "sonner";
-import * as z from "zod";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Combobox } from "@/components/ui/combobox";
 import { COLLEGES } from "@/config/colleges";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { H1, H2, Lead } from "@/components/Typography";
-
-const formSchema = z.object({
-  teamName: z.string().min(3, "Team name is too short"),
-
-  p1Name: z.string().min(3, "Player 1 name is too short"),
-  p1Email: z.string().refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-    message: "Invalid email",
-  }),
-  p1Phone: z.string().length(10, "Phone number must be 10 digits"),
-
-  p2Name: z.string().min(3, "Player 2 name is too short"),
-  p2Email: z.string().refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-    message: "Invalid email",
-  }),
-  p2Phone: z.string().length(10, "Phone number must be 10 digits"),
-});
+type RegisterFormValues = {
+  teamName: string;
+  clgName: string;
+  p1name: string;
+  p1email: string;
+  p1phone: string;
+  p2name: string;
+  p2email: string;
+  p2phone: string;
+};
 
 export default function RegisterPage() {
   return (
-    <main className="flex min-h-screen flex-row bg-background">
-      <div className="hidden sm:flex flex-2 border items-center justify-center relative">
-        <Image
-          src="/auth-coding-bg.png"
-          alt="static image"
-          fill
-          className="object-cover opacity-60"
-          priority
-        />
-      </div>
-
-      <div className="flex flex-col flex-2 gap-2 items-center p-8 justify-center">
-        <H1>DCF</H1>
-        <H2>Team Registration</H2>
-        <RegisterForm />
-      </div>
+    <main className="flex flex-row">
+      <section className="bg-secondary flex flex-1 flex-col items-center justify-center min-h-screen p-4 border"></section>
+      <RegisterForm />
     </main>
   );
 }
 
-export function RegisterForm() {
-  const form = useForm({
-    defaultValues: {
-      teamName: "",
-      p1Name: "",
-      p1Email: "",
-      p1Phone: "",
-      p2Name: "",
-      p2Email: "",
-      p2Phone: "",
-    },
-    validators: {
-      onSubmit: formSchema,
-    },
-    onSubmit: async ({ value }) => {
-      toast("You submitted the following values:", {
-        description: (
-          <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-            <code>{JSON.stringify(value, null, 2)}</code>
-          </pre>
-        ),
-        position: "bottom-right",
-        classNames: {
-          content: "flex flex-col gap-2",
-        },
-        style: {
-          "--border-radius": "calc(var(--radius)  + 4px)",
-        } as React.CSSProperties,
-      });
-    },
+function RegisterForm() {
+  const [values, setValues] = useState<RegisterFormValues>({
+    teamName: "",
+    clgName: "",
+    p1name: "",
+    p1email: "",
+    p1phone: "",
+    p2name: "",
+    p2email: "",
+    p2phone: "",
   });
 
-  return (
-    <Card className="bg-background w-full border-0">
-      <CardHeader>
-        <CardDescription className="text-center">
-          All fields are required.
-        </CardDescription>
-      </CardHeader>
+  function isEmptyCheck(values: RegisterFormValues) {
+    const errors: string[] = [];
 
-      <CardContent>
+    if (!values.teamName.trim()) errors.push("Team Name is required");
+    if (!values.clgName.trim()) errors.push("College Name is required");
+    if (!values.p1name.trim()) errors.push("Player 1 Name is required");
+    if (!values.p2name.trim()) errors.push("Player 2 Name is required");
+    if (!values.p1email.trim()) errors.push("Player 1 Email is required");
+    if (!values.p2email.trim()) errors.push("Player 2 Email is required");
+    if (!values.p1phone.trim()) errors.push("Player 1 Phone is required");
+    if (!values.p2phone.trim()) errors.push("Player 2 Phone is required");
+
+    return errors;
+  }
+
+  function isEqualCheck(values: RegisterFormValues) {
+    let errors: string[] = [];
+
+    if (values.p1email === values.p2email)
+      errors.push(" Player emails must be different.");
+    if (values.p1phone === values.p2phone)
+      errors.push("Player phone numbers must be different.");
+    return errors;
+  }
+
+  function regexCheck(values: RegisterFormValues) {
+    let errors: string[] = [];
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+    if (!emailRegex.test(values.p1email))
+      errors.push(" Player 1 Email is invalid.");
+    if (!emailRegex.test(values.p2email))
+      errors.push(" Player 2 Email is invalid.");
+    if (!phoneRegex.test(values.p1phone))
+      errors.push(" Player 1 Phone is invalid.");
+    if (!phoneRegex.test(values.p2phone))
+      errors.push(" Player 2 Phone is invalid.");
+
+    return errors;
+  }
+
+  function validateInputs(values: RegisterFormValues) {
+    let errors = isEmptyCheck(values);
+    if (errors.length) return errors;
+
+    errors = regexCheck(values);
+    if (errors.length) return errors;
+
+    errors = isEqualCheck(values);
+    return errors;
+  }
+
+  function handleFormSubmit() {
+    const errors = validateInputs(values);
+    if (errors.length) {
+      toast.error(
+        <ul className="list-disc pl-4">
+          {errors.map((err, i) => (
+            <li key={i}>{err}</li>
+          ))}
+        </ul>
+      );
+      return;
+    }
+  }
+
+  return (
+    <>
+      <section className="flex flex-1 flex-col gap-6 items-center justify-center min-h-screen p-4">
+        <div className="flex flex-col items-center">
+          <H2>DCF Registration</H2>
+          <Muted>Register your team for the event</Muted>
+        </div>
         <form
-          id="register-form"
-          onSubmit={(e) => {
+          onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            form.handleSubmit();
+            handleFormSubmit();
           }}
-          className="flex flex-col gap-4 md:gap-2 space-y-1"
+          className="flex flex-col gap-6 w-full items-center justify-center"
         >
-          <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-            <FormField
-              form={form}
-              name="teamName"
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <InputWithLabel
               label="Team Name"
-              placeholder="ex: avengers"
+              id="teamName"
+              placeholder="Enter your team name"
+              value={values.teamName}
+              onChange={(e) => {
+                setValues({ ...values, teamName: e.target.value });
+              }}
             />
-            <Field>
-              <FieldLabel>College</FieldLabel>
-              <CollegeCombobox />
-            </Field>
-          </FieldGroup>
-
-          <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-            <FormField form={form} name="p1Name" label="Player 1 Name" />
-            <FormField form={form} name="p2Name" label="Player 2 Name" />
-          </FieldGroup>
-
-          <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-            <FormField
-              form={form}
-              name="p1Email"
+            <div className="grid w-full max-w-sm items-center gap-3">
+              <Label>Select College</Label>
+              <Combobox
+                itemType="college"
+                list={COLLEGES}
+                value={values.clgName}
+                onChange={(val) => {
+                  setValues({ ...values, clgName: val });
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <InputWithLabel
+              label="Player 1 Name"
+              id="p1name"
+              placeholder="Enter player 1 name"
+              value={values.p1name}
+              onChange={(e) => {
+                setValues({ ...values, p1name: e.target.value });
+              }}
+            />
+            <InputWithLabel
+              label="Player 2 Name"
+              id="p2name"
+              placeholder="Enter player 2 name"
+              value={values.p2name}
+              onChange={(e) => {
+                setValues({ ...values, p2name: e.target.value });
+              }}
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <InputWithLabel
               label="Player 1 Email"
-              type="email"
-              placeholder="example@mr.com"
+              id="p1email"
+              placeholder="Enter player 1 email"
+              value={values.p1email}
+              onChange={(e) => {
+                setValues({ ...values, p1email: e.target.value });
+              }}
             />
-            <FormField
-              form={form}
-              name="p2Email"
+            <InputWithLabel
               label="Player 2 Email"
-              type="email"
-              placeholder="example@mr.com"
+              id="p2email"
+              placeholder="Enter player 2 email"
+              value={values.p2email}
+              onChange={(e) => {
+                setValues({ ...values, p2email: e.target.value });
+              }}
             />
-          </FieldGroup>
-          <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-            <FormField
-              form={form}
-              name="p1Phone"
-              label="Player 1 Phone Number"
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <InputWithLabel
+              label="Player 1 Phone"
+              id="p1phone"
+              placeholder="Enter player 1 phone"
+              value={values.p1phone}
+              onChange={(e) => {
+                setValues({ ...values, p1phone: e.target.value });
+              }}
             />
-            <FormField
-              form={form}
-              name="p2Phone"
-              label="Player 2 Phone Number"
+            <InputWithLabel
+              label="Player 2 Phone"
+              id="p2phone"
+              placeholder="Enter player 2 phone"
+              value={values.p2phone}
+              onChange={(e) => {
+                setValues({ ...values, p2phone: e.target.value });
+              }}
             />
-          </FieldGroup>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <Button className="flex" type="submit">
+              Register
+            </Button>
+          </div>
         </form>
-      </CardContent>
-
-      <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => form.reset()}>
-          Reset
-        </Button>
-        <Button type="submit" form="register-form">
-          Submit
-        </Button>
-      </CardFooter>
-    </Card>
+      </section>
+    </>
   );
 }
 
-function FormField({
-  form,
-  name,
+export function InputWithLabel({
   label,
-  type = "text",
-  placeholder = "",
+  id,
+  placeholder,
+  ...props
 }: {
-  form: any;
-  name: string;
   label: string;
-  type?: string;
-  placeholder?: string;
-}) {
+  id: string;
+  placeholder: string;
+} & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <form.Field
-      name={name}
-      children={(field: any) => {
-        const isInvalid =
-          field.state.meta.isTouched && !field.state.meta.isValid;
-
-        return (
-          <Field data-invalid={isInvalid}>
-            <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-            <Input
-              id={field.name}
-              name={field.name}
-              type={type}
-              value={field.state.value}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-              aria-invalid={isInvalid}
-              autoComplete="off"
-              placeholder={placeholder}
-            />
-            {isInvalid && <FieldError errors={field.state.meta.errors} />}
-          </Field>
-        );
-      }}
-    />
-  );
-}
-
-export function CollegeCombobox() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between overflow-hidden text-ellipsis w-full"
-        >
-          {value
-            ? COLLEGES.find((college) => college.value === value)?.label
-            : "Select college..."}
-          <ChevronsUpDown className="opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="p-0">
-        <Command>
-          <CommandInput placeholder="Search college..." className="h-9" />
-          <CommandList>
-            <CommandEmpty>No college found.</CommandEmpty>
-            <CommandGroup>
-              {COLLEGES.map((college) => (
-                <CommandItem
-                  key={college.value}
-                  value={college.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  {college.label}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === college.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <div className="grid w-full max-w-sm items-center gap-3">
+      <Label htmlFor={id}>{label}</Label>
+      <Input type="text" id={id} placeholder={placeholder} {...props} />
+    </div>
   );
 }
