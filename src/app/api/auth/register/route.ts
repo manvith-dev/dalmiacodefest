@@ -2,9 +2,7 @@ import connectDB from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import validateInputs from "@/lib/register/validations";
 import Team from "@/models/team.model";
-import jwt from "jsonwebtoken";
-import { SendOTP } from "@/lib/register/sendotp";
-import addOtpToDb from "@/lib/register/addOTPtoDB";
+import { sendConfirmationMail } from "@/lib/register/sendConfirmationMail";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -66,7 +64,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const registrationId = generateRegistrationId();
+
     const team = new Team({
+      registrationId,
       teamName,
       collegeName: clgName,
       players: [
@@ -77,25 +78,28 @@ export async function POST(req: NextRequest) {
 
     await team.save();
 
-    const token = jwt.sign(
+    await sendConfirmationMail({
+      teamName,
+      collegeName: clgName,
+      registrationId,
+      players: [
+        { name: p1name, email: p1email },
+        { name: p2name, email: p2email },
+      ],
+    });
+
+    return NextResponse.json(
+      { message: "A confirmation has been sent (IMPORTANT)." },
       {
-        id: team._id,
-      },
-      process.env.JWT_SECRET as string,
-      { expiresIn: "15m" }
+        status: 200,
+      }
     );
-
-    const [otp1, otp2] = await Promise.all([
-      SendOTP(p1email),
-      SendOTP(p2email),
-    ]);
-
-    if (otp1 && otp2) {
-      await Promise.all([addOtpToDb(otp1, p1email), addOtpToDb(otp2, p2email)]);
-    }
-
-    return NextResponse.json({ token }, { status: 200 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
+}
+
+function generateRegistrationId() {
+  return "EVT-" + Math.random().toString(36).substring(2, 8).toUpperCase();
 }

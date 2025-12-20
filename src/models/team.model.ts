@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface ITeam extends mongoose.Document {
+  registrationId: string;
   teamName: string;
   collegeName: string;
   players: {
@@ -8,7 +9,6 @@ export interface ITeam extends mongoose.Document {
     email: string;
     phone: string;
   }[];
-  isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,13 +21,13 @@ const playerSchema = new mongoose.Schema({
 
 const TeamSchema = new mongoose.Schema(
   {
+    registrationId: { type: String, unique: true, index: true },
     teamName: { type: String, required: true, unique: true },
     collegeName: { type: String, required: true },
     players: {
       type: [playerSchema],
       required: true,
     },
-    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

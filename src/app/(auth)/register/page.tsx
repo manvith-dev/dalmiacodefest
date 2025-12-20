@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { InputWithLabel } from "@/components/InputWithLabel";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { H2, Muted } from "@/components/Typography";
@@ -11,6 +11,11 @@ import { COLLEGES } from "@/config/colleges";
 import { Spinner } from "@/components/ui/spinner";
 import validateInputs from "@/lib/register/validations";
 import { useRouter } from "next/navigation";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export type RegisterFormValues = {
   teamName: string;
@@ -33,6 +38,7 @@ export default function RegisterPage() {
 }
 
 function RegisterForm() {
+  const [open, setOpen] = useState(false);
   const [values, setValues] = useState<RegisterFormValues>({
     teamName: "",
     clgName: "",
@@ -45,6 +51,32 @@ function RegisterForm() {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+
+  async function submitRegistration() {
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        toast.error(data.error || "Registration Failed");
+      } else {
+        toast.success("Registration successful! Check your email.");
+        router.push("/login");
+        setOpen(false);
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleFormSubmit() {
     setLoading(true);
@@ -59,36 +91,9 @@ function RegisterForm() {
       );
       return;
     }
+    setLoading(false);
 
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      let data;
-
-      try {
-        data = await res.json();
-      } catch {
-        data = {};
-      }
-
-      if (!res.ok) {
-        toast.error(data.error || "Registration Failed");
-      } else {
-        toast.success(
-          "Data submitted successfully! Verify your email to confirm."
-        );
-        if (data.token) router.push(`/verifyotp?token=${data.token}`);
-        else toast.error("Invalid Response");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+    setOpen(true);
   }
 
   return (
@@ -151,7 +156,7 @@ function RegisterForm() {
             <InputWithLabel
               label="Player 1 Email"
               id="p1email"
-              placeholder="Enter player 1 email"
+              placeholder="A mail will be sent to this email"
               value={values.p1email}
               onChange={(e) => {
                 setValues({ ...values, p1email: e.target.value });
@@ -160,7 +165,7 @@ function RegisterForm() {
             <InputWithLabel
               label="Player 2 Email"
               id="p2email"
-              placeholder="Enter player 2 email"
+              placeholder="A mail will be sent to this email"
               value={values.p2email}
               onChange={(e) => {
                 setValues({ ...values, p2email: e.target.value });
@@ -188,31 +193,66 @@ function RegisterForm() {
             />
           </div>
           <div className="flex flex-col sm:flex-row gap-4 w-full">
-            <Button className="flex" type="submit" disabled={loading}>
-              {loading && <Spinner />}
-              Register
-            </Button>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button type="submit" disabled={loading}>
+                  {loading && <Spinner />}
+                  Review & Register
+                </Button>
+              </PopoverTrigger>
+
+              <PopoverContent className="w-96 space-y-4">
+                <div>
+                  <h4 className="font-semibold">Confirm Details</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Emails below will receive the confirmation mail. Typos
+                    cannot be fixed later.
+                  </p>
+                </div>
+
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Team</span>
+                    <div className="font-medium">{values.teamName}</div>
+                  </div>
+
+                  <div>
+                    <span className="text-muted-foreground">College</span>
+                    <div className="font-medium">{values.clgName}</div>
+                  </div>
+
+                  <div className="pt-2">
+                    <span className="text-muted-foreground">Emails</span>
+                    <div className="font-mono bg-secondary rounded p-2 mt-1">
+                      {values.p1email}
+                    </div>
+                    <div className="font-mono bg-secondary rounded p-2 mt-1">
+                      {values.p2email}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => setOpen(false)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    className="flex-1"
+                    onClick={submitRegistration}
+                    disabled={loading}
+                  >
+                    Confirm & Submit
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </form>
       </section>
     </>
-  );
-}
-
-export function InputWithLabel({
-  label,
-  id,
-  placeholder,
-  ...props
-}: {
-  label: string;
-  id: string;
-  placeholder: string;
-} & React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <div className="grid w-full max-w-sm items-center gap-3">
-      <Label htmlFor={id}>{label}</Label>
-      <Input type="text" id={id} placeholder={placeholder} {...props} />
-    </div>
   );
 }
