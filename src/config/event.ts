@@ -5,6 +5,8 @@ export const EVENT = {
     "A three-round tech challenge where teams battle through, rapid-fire logic, design, and real coding. Built to test how fast you think, how well you create, and how smart you solve",
   date: "2026-01-31",
   time: "9:00 AM - 12:00 PM",
+  startAt: "2026-01-31T09:00:00+05:30",
+  WhatsAppGroupLink: "",
 };
 
 export const GAMES = {

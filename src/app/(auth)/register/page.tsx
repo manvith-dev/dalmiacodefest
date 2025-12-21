@@ -4,7 +4,7 @@ import { useState } from "react";
 import { InputWithLabel } from "@/components/InputWithLabel";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { H2, Muted } from "@/components/Typography";
+import { H2, Muted, P } from "@/components/Typography";
 import { toast } from "sonner";
 import { Combobox } from "@/components/ui/combobox";
 import { COLLEGES } from "@/config/colleges";
@@ -31,7 +31,7 @@ export type RegisterFormValues = {
 export default function RegisterPage() {
   return (
     <main className="flex flex-row">
-      <section className="bg-secondary flex flex-1 flex-col items-center justify-center min-h-screen p-4 border"></section>
+      <section className="bg-secondary hidden md:flex flex-1 flex-col items-center justify-center min-h-screen p-4 border"></section>
       <RegisterForm />
     </main>
   );
@@ -98,7 +98,7 @@ function RegisterForm() {
 
   return (
     <>
-      <section className="flex flex-1 flex-col gap-6 items-center justify-center min-h-screen p-4">
+      <section className="flex flex-1 flex-col gap-2 items-center justify-center min-h-screen p-4">
         <div className="flex flex-col items-center">
           <H2>DCF Registration</H2>
           <Muted>Register your team for the event</Muted>
@@ -108,9 +108,9 @@ function RegisterForm() {
             e.preventDefault();
             handleFormSubmit();
           }}
-          className="flex flex-col gap-6 w-full items-center justify-center"
+          className="flex flex-col gap-6 w-full items-center justify-center p-4 sm:p-8 border rounded-md"
         >
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <div className="flex flex-col sm:flex-row gap-4 w-full items-center justify-center">
             <InputWithLabel
               label="Team Name"
               id="teamName"
@@ -132,7 +132,7 @@ function RegisterForm() {
               />
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <div className="flex flex-col sm:flex-row gap-4 w-full  items-center justify-center">
             <InputWithLabel
               label="Player 1 Name"
               id="p1name"
@@ -152,7 +152,7 @@ function RegisterForm() {
               }}
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <div className="flex flex-col sm:flex-row gap-4 w-full items-center justify-center">
             <InputWithLabel
               label="Player 1 Email"
               id="p1email"
@@ -172,7 +172,7 @@ function RegisterForm() {
               }}
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <div className="flex flex-col sm:flex-row gap-4 w-full items-center justify-center">
             <InputWithLabel
               label="Player 1 Phone"
               id="p1phone"
@@ -192,6 +192,33 @@ function RegisterForm() {
               }}
             />
           </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full  items-center">
+            <p className="text-sm text-muted-foreground">
+              By registering you agree to the{" "}
+              <Button
+                type="button"
+                size="sm"
+                variant="link"
+                onClick={() => {
+                  router.push("/pages/terms");
+                }}
+              >
+                terms
+              </Button>{" "}
+              and{" "}
+              <Button
+                type="button"
+                size="sm"
+                variant="link"
+                onClick={() => {
+                  router.push("/pages/privacy");
+                }}
+              >
+                privacy policy
+              </Button>
+            </p>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 w-full">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>

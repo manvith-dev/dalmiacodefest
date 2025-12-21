@@ -9,44 +9,41 @@ import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 
 export type LoginFormValues = {
-  regiId: string;
-  email: string;
+  username: string;
+  password: string;
 };
 
-export default function LoginPage() {
+export default function AdminLoginPage() {
   return (
     <main className="flex">
-      <section className="bg-secondary hidden sm:flex flex-1 border">
-        Yo
-      </section>
       <section className="flex flex-col flex-1 border min-h-screen items-center justify-center p-4">
-        <LoginForm />
+        <AdminLoginForm />
       </section>
     </main>
   );
 }
 
-function LoginForm() {
+function AdminLoginForm() {
   const [values, setValues] = useState<LoginFormValues>({
-    regiId: "",
-    email: "",
+    username: "",
+    password: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   async function handleFormSubmit() {
-    if (values.regiId.trim().length === 0) {
-      toast.error("Please enter Registration ID");
+    if (values.username.trim().length === 0) {
+      toast.error("Please enter admin username");
       return;
     }
-    if (values.email.trim().length === 0) {
-      toast.error("Please enter any one email");
+    if (values.password.trim().length === 0) {
+      toast.error("Please enter admin password");
       return;
     }
 
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/login/admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -63,7 +60,7 @@ function LoginForm() {
         toast.error(data.error || "Something went wrong");
       } else {
         toast.success(data.message || "Login Successful");
-        router.push("/pages/participants/dashboard");
+        router.push("/pages/admin/dashboard");
       }
     } catch {
       toast.error("Something went wrong");
@@ -74,8 +71,8 @@ function LoginForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <H2>DCF Login</H2>
+      <div className="flex flex-col items-center justify-center">
+        <H2>DCF Admin Login</H2>
       </div>
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -86,21 +83,21 @@ function LoginForm() {
       >
         <div className="flex items-center justify-center flex-col gap-4 w-full p-8">
           <InputWithLabel
-            label="Registration ID:"
-            id="regiID"
-            placeholder="check confirmation mail for ID"
-            value={values.regiId}
+            label="Admin username:"
+            id="username"
+            placeholder="Enter admin username"
+            value={values.username}
             onChange={(e) => {
-              setValues({ ...values, regiId: e.target.value });
+              setValues({ ...values, username: e.target.value });
             }}
           />
           <InputWithLabel
-            label="Email:"
-            id="email"
-            placeholder="any one of the emails"
-            value={values.email}
+            label="Admin password:"
+            id="password"
+            placeholder="Enter admin password"
+            value={values.password}
             onChange={(e) => {
-              setValues({ ...values, email: e.target.value });
+              setValues({ ...values, password: e.target.value });
             }}
           />
         </div>
@@ -115,20 +112,10 @@ function LoginForm() {
             size="sm"
             variant="link"
             onClick={() => {
-              router.push("/resend-email");
+              router.push("/login");
             }}
           >
-            Didn't recieve mail?
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="link"
-            onClick={() => {
-              router.push("/admin");
-            }}
-          >
-            Are you a admin?
+            Are you a participant?
           </Button>
         </div>
       </form>

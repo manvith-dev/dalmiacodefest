@@ -27,7 +27,7 @@ export default function HeroSection() {
   const eventDate = new Date(EVENT.date);
 
   useEffect(() => {
-    const eventDate = new Date(EVENT.date).getTime();
+    const eventDate = new Date(EVENT.startAt).getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -56,11 +56,6 @@ export default function HeroSection() {
       className="flex flex-col gap-4 px-8 md:px-16 items-center relative min-h-screen max-w-screen overflow-hidden"
       style={{ backgroundImage: "url('/HeroImage.png')" }}
     >
-      <div className="opacity-40 flex items-center justify-center">
-        <div className="z-50 absolute top-0 px-2 bg-white text-black font-bold flex items-center justify-center">
-          THE WEBSITE IS UNDER DEVELOPMENT. FEATURES MAY NOT WORK.
-        </div>
-      </div>
       <Navbar />
       <Image
         src={"/PdlcBanner.png"}
