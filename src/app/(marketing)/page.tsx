@@ -1,8 +1,8 @@
-import HeroSection from "./components/HeroSection";
-import Footer from "./components/Footer";
-import About from "./components/About";
-import Rules from "./components/Rules";
-import Contact from "./components/Contact";
+import HeroSection from "@/components/marketing/HeroSection";
+import Footer from "@/components/marketing/Footer";
+import About from "@/components/marketing/About";
+import Rules from "@/components/marketing/Rules";
+import Contact from "@/components/marketing/Contact";
 
 export default function Home() {
   return (

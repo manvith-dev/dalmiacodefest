@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyJwt } from "@/lib/auth/verifyJwt";
-import { getToken } from "@/lib/auth/getToken";
+import { verifyJwt } from "@/features/auth/services/verifyJwt";
+import { getToken } from "@/features/auth/services/getToken";
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;

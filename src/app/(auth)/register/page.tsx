@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { InputWithLabel } from "@/components/InputWithLabel";
+import { InputWithLabel } from "@/features/auth/components/InputWithLabel";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { H2, Muted, P } from "@/components/Typography";
@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { Combobox } from "@/components/ui/combobox";
 import { COLLEGES } from "@/config/colleges";
 import { Spinner } from "@/components/ui/spinner";
-import validateInputs from "@/lib/register/validations";
+import validateInputs from "@/features/auth/services/validations";
 import { useRouter } from "next/navigation";
 import {
   Popover,
@@ -79,7 +79,6 @@ function RegisterForm() {
   }
 
   async function handleFormSubmit() {
-    setLoading(true);
     const errors = validateInputs(values);
     if (errors.length) {
       toast.error(
@@ -91,7 +90,6 @@ function RegisterForm() {
       );
       return;
     }
-    setLoading(false);
 
     setOpen(true);
   }
@@ -200,7 +198,7 @@ function RegisterForm() {
                 size="sm"
                 variant="link"
                 onClick={() => {
-                  router.push("/pages/terms");
+                  router.push("/terms");
                 }}
               >
                 terms
@@ -211,7 +209,7 @@ function RegisterForm() {
                 size="sm"
                 variant="link"
                 onClick={() => {
-                  router.push("/pages/privacy");
+                  router.push("/privacy");
                 }}
               >
                 privacy policy

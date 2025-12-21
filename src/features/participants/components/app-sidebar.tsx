@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { H2, H3 } from "./Typography";
+import { H2, H3 } from "../../../components/Typography";
 
 // Menu items.
 const items = [

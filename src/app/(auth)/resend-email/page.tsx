@@ -1,7 +1,7 @@
 "use client";
 
 import { H2, Lead } from "@/components/Typography";
-import { InputWithLabel } from "@/components/InputWithLabel";
+import { InputWithLabel } from "@/features/auth/components/InputWithLabel";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";

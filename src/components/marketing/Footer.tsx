@@ -104,15 +104,12 @@ export default function Footer() {
         <Separator orientation="vertical" />
         <Link
           className="text-sm underline underline-offset-4"
-          href={"/pages/privacy"}
+          href={"/privacy"}
         >
           Privacy Policy
         </Link>
         <Separator orientation="vertical" />
-        <Link
-          className="text-sm underline underline-offset-4"
-          href={"/pages/terms"}
-        >
+        <Link className="text-sm underline underline-offset-4" href={"/terms"}>
           Terms & Conditions
         </Link>
       </div>

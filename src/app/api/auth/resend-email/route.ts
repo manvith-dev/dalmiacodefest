@@ -1,5 +1,5 @@
 import connectDB from "@/lib/db";
-import { sendConfirmationMail } from "@/lib/register/sendConfirmationMail";
+import { sendConfirmationMail } from "@/features/auth/services/sendConfirmationMail";
 import Team from "@/models/team.model";
 import { NextRequest, NextResponse } from "next/server";
 

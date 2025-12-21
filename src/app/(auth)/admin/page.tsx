@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { InputWithLabel } from "@/components/InputWithLabel";
+import { InputWithLabel } from "@/features/auth/components/InputWithLabel";
 import { H2 } from "@/components/Typography";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -60,7 +60,7 @@ function AdminLoginForm() {
         toast.error(data.error || "Something went wrong");
       } else {
         toast.success(data.message || "Login Successful");
-        router.push("/pages/admin/dashboard");
+        router.push("/admin/dashboard");
       }
     } catch {
       toast.error("Something went wrong");

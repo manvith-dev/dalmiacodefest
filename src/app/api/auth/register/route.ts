@@ -1,8 +1,8 @@
 import connectDB from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import validateInputs from "@/lib/register/validations";
+import validateInputs from "@/features/auth/services/validations";
 import Team from "@/models/team.model";
-import { sendConfirmationMail } from "@/lib/register/sendConfirmationMail";
+import { sendConfirmationMail } from "@/features/auth/services/sendConfirmationMail";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
