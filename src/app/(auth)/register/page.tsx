@@ -23,6 +23,7 @@ import {
 export type RegisterFormValues = {
   teamName: string;
   clgName: string;
+  customCollegeName?: string;
   p1name: string;
   p1email: string;
   p1phone: string;
@@ -51,6 +52,7 @@ function RegisterForm() {
   const [values, setValues] = useState<RegisterFormValues>({
     teamName: "",
     clgName: "",
+    customCollegeName: "",
     p1name: "",
     p1email: "",
     p1phone: "",
@@ -89,6 +91,11 @@ function RegisterForm() {
 
   async function handleFormSubmit() {
     const errors = validateInputs(values);
+
+    if (values.clgName === "other" && !values.customCollegeName?.trim()) {
+      errors.push("Please enter your college name");
+    }
+
     if (errors.length) {
       toast.error(
         <ul className="list-disc pl-4">
@@ -129,15 +136,30 @@ function RegisterForm() {
               }}
             />
             <div className="grid w-full max-w-sm items-center gap-3">
-              <Label>Select College</Label>
-              <Combobox
-                itemType="college"
-                list={COLLEGES}
-                value={values.clgName}
-                onChange={(val) => {
-                  setValues({ ...values, clgName: val });
-                }}
-              />
+              {values.clgName !== "other" && (
+                <>
+                  <Label>Select College</Label>
+                  <Combobox
+                    itemType="college"
+                    list={COLLEGES}
+                    value={values.clgName}
+                    onChange={(val) => {
+                      setValues({ ...values, clgName: val });
+                    }}
+                  />
+                </>
+              )}
+              {values.clgName === "other" && (
+                <InputWithLabel
+                  label="College Name"
+                  id="customCollegeName"
+                  placeholder="Enter your college name"
+                  value={values.customCollegeName}
+                  onChange={(e) =>
+                    setValues({ ...values, customCollegeName: e.target.value })
+                  }
+                />
+              )}
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 w-full  items-center justify-center">
@@ -253,7 +275,12 @@ function RegisterForm() {
 
                   <div>
                     <span className="text-muted-foreground">College</span>
-                    <div className="font-medium">{values.clgName}</div>
+                    <div className="font-medium">
+                      {values.clgName === "other"
+                        ? values.customCollegeName
+                        : COLLEGES.find((c) => c.value === values.clgName)
+                            ?.label}
+                    </div>
                   </div>
 
                   <div className="pt-2">

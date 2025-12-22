@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
   const {
     teamName,
     clgName,
+    customCollegeName,
     p1name,
     p1email,
     p1phone,
@@ -65,6 +66,8 @@ export async function POST(req: NextRequest) {
     }
 
     const registrationId = generateRegistrationId();
+    const collegeNameToSave =
+      clgName === "other" ? slugifyCollege(customCollegeName) : clgName;
 
     const team = new Team({
       registrationId,
@@ -80,7 +83,7 @@ export async function POST(req: NextRequest) {
 
     await sendConfirmationMail({
       teamName,
-      collegeName: clgName,
+      collegeName: collegeNameToSave,
       registrationId,
       players: [
         { name: p1name, email: p1email },
@@ -102,4 +105,12 @@ export async function POST(req: NextRequest) {
 
 function generateRegistrationId() {
   return "EVT-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+function slugifyCollege(name: string) {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "") // remove special chars
+    .replace(/\s+/g, "-"); // replace spaces with hyphens
 }
