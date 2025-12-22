@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { H2 } from "@/components/Typography";
 import {
   Table,
@@ -59,7 +61,13 @@ function TableList({ teams }: { teams: TeamRow[] }) {
             <TableCell>{index + 1}</TableCell>
             <TableCell className="font-medium">{team.registrationId}</TableCell>
             <TableCell>{team.teamName}</TableCell>
-            <TableCell>{team.collegeName}</TableCell>
+            <TableCell>
+              <TableCell>
+                {team.collegeName
+                  .replace(/-/g, " ")
+                  .replace(/\b\w/g, (c) => c.toUpperCase())}
+              </TableCell>
+            </TableCell>
             <TableCell className="text-right">
               {new Date(team.createdAt).toLocaleDateString()}
             </TableCell>
