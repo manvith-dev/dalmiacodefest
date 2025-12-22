@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function AdminDashboardPage() {
-  const [participants, setParticipants] = useState<number>(NaN);
+  const [participants, setParticipants] = useState<number>(0);
 
   useEffect(() => {
     async function getNumberOfParticipants() {

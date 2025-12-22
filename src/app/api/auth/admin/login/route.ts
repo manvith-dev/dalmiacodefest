@@ -5,12 +5,14 @@ export async function POST(req: NextRequest) {
   try {
     const { username, password } = await req.json();
 
-    if (username !== process.env.ADMIN_USERNAME) {
-      return NextResponse.json({ error: "Wrong Username" }, { status: 401 });
-    }
-
-    if (password !== process.env.ADMIN_PASSWORD) {
-      return NextResponse.json({ error: "Wrong Password" }, { status: 401 });
+    if (
+      username !== process.env.ADMIN_USERNAME ||
+      password !== process.env.ADMIN_PASSWORD
+    ) {
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 401 }
+      );
     }
 
     const token = jwt.sign(
@@ -31,7 +33,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24,
+      maxAge: 60 * 60 * 12,
     });
 
     return response;

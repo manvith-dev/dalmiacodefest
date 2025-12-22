@@ -19,7 +19,7 @@ export function proxy(req: NextRequest) {
     const token = getToken(req, "admin");
 
     if (!token || !verifyJwt(token, "admin")) {
-      return NextResponse.redirect(new URL("/admin_login", req.url));
+      return NextResponse.redirect(new URL("/login-admin", req.url));
     }
   }
 

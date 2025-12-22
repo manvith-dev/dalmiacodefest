@@ -4,13 +4,23 @@ import Team from "@/models/team.model";
 import jwt from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { regiId, email } = body;
-
   try {
+    const body = await req.json();
+    let { regiId, email } = body;
+
+    if (typeof regiId !== "string" || typeof email !== "string") {
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 400 }
+      );
+    }
+
+    regiId = regiId.trim();
+    email = email.trim().toLowerCase();
+
     await connectDB();
 
-    const team = await Team.findOne({ registrationId: regiId });
+    const team = await Team.findOne({ registrationId: regiId }).lean();
 
     if (!team) {
       return NextResponse.json(

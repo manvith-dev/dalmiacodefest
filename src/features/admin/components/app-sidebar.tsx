@@ -2,6 +2,7 @@
 
 import { Home, List } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import {
   Sidebar,
@@ -34,6 +35,15 @@ const items = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await fetch("/api/auth/admin/logout", {
+      method: "POST",
+    });
+
+    router.push("/login-admin");
+  }
 
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar shadow-inner">
@@ -89,7 +99,9 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <Button variant="destructive">Logout</Button>
+        <Button variant="destructive" onClick={handleLogout}>
+          Logout
+        </Button>
       </SidebarFooter>
     </Sidebar>
   );

@@ -43,36 +43,37 @@ function LoginForm() {
   const router = useRouter();
 
   async function handleFormSubmit() {
-    if (values.regiId.trim().length === 0) {
+    const email = values.email.trim();
+    const regiId = values.regiId.trim();
+
+    if (!regiId) {
       toast.error("Please enter Registration ID");
       return;
     }
-    if (values.email.trim().length === 0) {
-      toast.error("Please enter any one email");
+
+    if (!email) {
+      toast.error("Please enter email");
       return;
     }
 
     try {
       setLoading(true);
+
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ email, regiId }),
       });
 
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = {};
-      }
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
         toast.error(data.error || "Something went wrong");
-      } else {
-        toast.success(data.message || "Login Successful");
-        router.push("/participants/dashboard");
+        return;
       }
+
+      toast.success(data.message || "Login Successful");
+      router.push("/participants/dashboard");
     } catch {
       toast.error("Something went wrong");
     } finally {

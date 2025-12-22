@@ -43,7 +43,7 @@ function AdminLoginForm() {
 
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/login/admin", {
+      const res = await fetch("/api/auth/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
