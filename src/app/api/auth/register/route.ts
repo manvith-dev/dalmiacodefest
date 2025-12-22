@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     const team = new Team({
       registrationId,
       teamName,
-      collegeName: clgName,
+      collegeName: collegeNameToSave,
       players: [
         { name: p1name, email: p1email, phone: p1phone },
         { name: p2name, email: p2email, phone: p2phone },
