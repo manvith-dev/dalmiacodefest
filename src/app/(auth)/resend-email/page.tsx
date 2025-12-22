@@ -7,14 +7,17 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import HavingProblems from "@/features/auth/components/HavingProblems";
 
 export default function ResendEmailPage() {
   return (
-    <main className="flex">
-      <section className="flex flex-col flex-1 border min-h-screen items-center justify-center p-4">
-        <H2>RESEND EMAIL</H2>
-        <Lead>Enter both registered emails</Lead>
-
+    <main className="">
+      <section className="flex flex-col items-center justify-center p-4 gap-6">
+        <HavingProblems />
+        <div className="flex flex-col items-center justify-center">
+          <H2>RESEND EMAIL</H2>
+          <Lead>Enter both registered emails</Lead>
+        </div>
         <ResendEmailForm />
       </section>
     </main>
@@ -79,6 +82,7 @@ function ResendEmailForm() {
           <InputWithLabel
             label="Player 1 email:"
             id="email1"
+            type="email"
             placeholder="Enter email 1"
             value={values.email1}
             onChange={(e) => {
@@ -88,6 +92,7 @@ function ResendEmailForm() {
           <InputWithLabel
             label="Player 2 email:"
             id="email2"
+            type="email"
             placeholder="Enter email 2"
             value={values.email2}
             onChange={(e) => {

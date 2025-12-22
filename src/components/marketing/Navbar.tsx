@@ -50,9 +50,9 @@ export function Navbar() {
           </NavigationMenuItem>
         </NavigationMenuList>
         <NavigationMenuItem className="flex flex-row items-center gap-4">
-          <Link href="/login">
+          <Link href="/participants/dashboard">
             <Button size="sm" variant="outline">
-              Log In
+              Dashboard
             </Button>
           </Link>
           <Link href="/register">

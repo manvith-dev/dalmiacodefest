@@ -6,7 +6,7 @@ export const EVENT = {
   date: "2026-01-31",
   time: "9:00 AM - 12:00 PM",
   startAt: "2026-01-31T09:00:00+05:30",
-  WhatsAppGroupLink: "",
+  WhatsAppGroupLink: "https://chat.whatsapp.com/L2rdvJSgKU7IciLV1gP7EO",
 };
 
 export const GAMES = {

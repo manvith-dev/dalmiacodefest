@@ -6,7 +6,7 @@ export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Participants area
-  if (pathname.startsWith("/pages/participants")) {
+  if (pathname.startsWith("/participants")) {
     const token = getToken(req, "participant");
 
     if (!token || !verifyJwt(token, "participant")) {
@@ -15,11 +15,11 @@ export function proxy(req: NextRequest) {
   }
 
   // Admin area
-  if (pathname.startsWith("/pages/admin")) {
+  if (pathname.startsWith("/admin")) {
     const token = getToken(req, "admin");
 
     if (!token || !verifyJwt(token, "admin")) {
-      return NextResponse.redirect(new URL("/login/admin", req.url));
+      return NextResponse.redirect(new URL("/admin_login", req.url));
     }
   }
 

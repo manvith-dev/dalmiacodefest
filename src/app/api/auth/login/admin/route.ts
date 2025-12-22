@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       { role: "admin" },
       process.env.JWT_SECRET as string,
       {
-        expiresIn: "1d",
+        expiresIn: "12h",
       }
     );
 

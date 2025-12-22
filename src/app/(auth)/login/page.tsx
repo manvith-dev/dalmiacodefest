@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
+import HavingProblems from "@/features/auth/components/HavingProblems";
+import Image from "next/image";
+import iconPattern from "@/assets/iconPattern.png";
 
 export type LoginFormValues = {
   regiId: string;
@@ -17,9 +20,14 @@ export default function LoginPage() {
   return (
     <main className="flex">
       <section className="bg-secondary hidden sm:flex flex-1 border">
-        Yo
+        <Image
+          src={iconPattern}
+          alt="random patterns"
+          className="object-cover opacity-70"
+        />
       </section>
-      <section className="flex flex-col flex-1 border min-h-screen items-center justify-center p-4">
+      <section className="flex flex-col flex-1 border min-h-screen items-center justify-center p-4 gap-6">
+        <HavingProblems />
         <LoginForm />
       </section>
     </main>
@@ -74,9 +82,6 @@ function LoginForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <H2>DCF Login</H2>
-      </div>
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
@@ -84,6 +89,9 @@ function LoginForm() {
         }}
         className="flex flex-col w-full items-center justify-center"
       >
+        <div className="flex flex-col items-center">
+          <H2>DCF Login</H2>
+        </div>
         <div className="flex items-center justify-center flex-col gap-4 w-full p-8">
           <InputWithLabel
             label="Registration ID:"
@@ -119,16 +127,6 @@ function LoginForm() {
             }}
           >
             Didn't recieve mail?
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="link"
-            onClick={() => {
-              router.push("/admin");
-            }}
-          >
-            Are you a admin?
           </Button>
         </div>
       </form>

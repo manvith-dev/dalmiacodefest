@@ -32,5 +32,6 @@ const TeamSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Team = mongoose.model<ITeam>("Team", TeamSchema);
+const Team = mongoose.models.Team || mongoose.model<ITeam>("Team", TeamSchema);
+
 export default Team;

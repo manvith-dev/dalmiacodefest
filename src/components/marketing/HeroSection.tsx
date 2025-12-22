@@ -106,7 +106,7 @@ export default function HeroSection() {
             <Link href="/register">
               <Button variant="default">Register Now</Button>
             </Link>
-            <Button variant="outline">Read More</Button>
+            {/* <Button variant="outline">Read More</Button> */}
           </div>
         </div>
         <Separator orientation="vertical" />

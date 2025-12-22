@@ -11,6 +11,9 @@ import { COLLEGES } from "@/config/colleges";
 import { Spinner } from "@/components/ui/spinner";
 import validateInputs from "@/features/auth/services/validations";
 import { useRouter } from "next/navigation";
+import HavingProblems from "@/features/auth/components/HavingProblems";
+import Image from "next/image";
+import iconPattern from "@/assets/iconPattern.png";
 import {
   Popover,
   PopoverContent,
@@ -31,7 +34,13 @@ export type RegisterFormValues = {
 export default function RegisterPage() {
   return (
     <main className="flex flex-row">
-      <section className="bg-secondary hidden md:flex flex-1 flex-col items-center justify-center min-h-screen p-4 border"></section>
+      <section className="bg-secondary hidden md:flex flex-1 min-h-screen">
+        <Image
+          src={iconPattern}
+          alt="random patterns"
+          className="object-cover opacity-60"
+        />
+      </section>
       <RegisterForm />
     </main>
   );
@@ -96,7 +105,8 @@ function RegisterForm() {
 
   return (
     <>
-      <section className="flex flex-1 flex-col gap-2 items-center justify-center min-h-screen p-4">
+      <section className="flex flex-1 flex-col gap-2 items-center justify-evenly min-h-screen p-4">
+        <HavingProblems />
         <div className="flex flex-col items-center">
           <H2>DCF Registration</H2>
           <Muted>Register your team for the event</Muted>

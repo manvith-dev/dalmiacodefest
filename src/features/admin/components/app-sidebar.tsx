@@ -1,11 +1,12 @@
 "use client";
 
-import { Home, Inbox } from "lucide-react";
+import { Home, List } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -16,17 +17,18 @@ import {
 } from "@/components/ui/sidebar";
 
 import { H3 } from "../../../components/Typography";
+import { Button } from "@/components/ui/button";
 
 const items = [
   {
     title: "Dashboard",
-    url: "/participants/dashboard",
+    url: "/admin/dashboard",
     icon: Home,
   },
   {
-    title: "Updates",
-    url: "/participants/inbox",
-    icon: Inbox,
+    title: "Participants list",
+    url: "/admin/participantsList",
+    icon: List,
   },
 ];
 
@@ -86,6 +88,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <Button variant="destructive">Logout</Button>
+      </SidebarFooter>
     </Sidebar>
   );
 }
