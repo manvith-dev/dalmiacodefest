@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, List } from "lucide-react";
+import { Home, List, Trophy } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -30,6 +30,11 @@ const items = [
     title: "Participants list",
     url: "/admin/participantsList",
     icon: List,
+  },
+  {
+    title: "Round 1 Winners",
+    url: "/admin/winners/round1",
+    icon: Trophy,
   },
 ];
 

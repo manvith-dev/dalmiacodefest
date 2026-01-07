@@ -1,47 +1,66 @@
 import clsx from "clsx";
-import { Round1QuestionsType } from "../round_one.types";
+import { useQuizContext } from "../controllers/QuizContext";
 
-export function Pagination({
-  questions,
-  setIdx,
-}: {
-  questions: Round1QuestionsType[];
-  setIdx: (idx: number) => void;
-}) {
+export function Pagination() {
+  const { questions, goToIndex, idx } = useQuizContext();
+
   return (
-    <div className="border p-4 rounded-md">
-      <div className="grid grid-cols-5 auto-rows-fr gap-1">
-        {questions.map((q, i) =>
-          q.userAnswer === null ? (
-            <Box key={i} variant="" onSelect={() => setIdx(i)} />
-          ) : q.correctOption === q.userAnswer ? (
-            <Box key={i} variant="correct" onSelect={() => setIdx(i)} />
-          ) : (
-            <Box key={i} variant="incorrect" onSelect={() => setIdx(i)} />
-          )
-        )}
+    <div className="border rounded-lg p-4 ">
+      <div className="grid grid-cols-5 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+        {questions.map((q, i) => {
+          let variant: "unanswered" | "correct" | "incorrect" = "unanswered";
+
+          if (q.userAnswer !== null) {
+            variant =
+              q.userAnswer === q.correctOption ? "correct" : "incorrect";
+          }
+
+          return (
+            <Box
+              key={i}
+              index={i}
+              active={i === idx}
+              variant={variant}
+              onSelect={() => goToIndex(i)}
+            />
+          );
+        })}
       </div>
     </div>
   );
 }
 
-function Box({ variant, onSelect }: { variant: string; onSelect: () => void }) {
-  let borderColor: string;
+function Box({
+  index,
+  variant,
+  active,
+  onSelect,
+}: {
+  index: number;
+  variant: "unanswered" | "correct" | "incorrect";
+  active: boolean;
+  onSelect: () => void;
+}) {
+  const styles = {
+    unanswered:
+      "border-muted-foreground/40 text-muted-foreground hover:bg-muted",
+    correct: "border-easy bg-easy/15 text-easy hover:bg-easy/25",
+    incorrect:
+      "border-destructive bg-destructive/15 text-destructive hover:bg-destructive/25",
+  };
 
-  borderColor =
-    variant === "correct"
-      ? "border-green-400"
-      : variant === "incorrect"
-      ? "border-destructive"
-      : "border-muted-foreground";
   return (
     <button
       type="button"
       onClick={onSelect}
       className={clsx(
-        "bg-card border h-10 w-10 rounded-md cursor-pointer hover:bg-secondary",
-        borderColor
+        "relative flex h-10 w-10 items-center justify-center rounded-md border text-sm font-medium transition-all",
+        "hover:scale-[1.05] active:scale-[0.98]",
+        styles[variant],
+        active && "ring-2 ring-primary ring-offset-2 ring-offset-background"
       )}
-    ></button>
+    >
+      {index + 1}
+    </button>
   );
 }

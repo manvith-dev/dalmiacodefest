@@ -153,3 +153,29 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
+
+@media print {
+
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
+
+  section,
+  main {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  table {
+    width: 100% !important;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}

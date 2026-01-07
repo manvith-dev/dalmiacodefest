@@ -1,25 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyJwt } from "@/features/auth/services/verifyJwt";
+import { validateJwt } from "@/features/auth/services/verifyJwt";
 import { getToken } from "@/features/auth/services/getToken";
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Participants area
   if (pathname.startsWith("/participants")) {
-    const token = getToken(req, "participant");
+    const token = getToken(req, "participant_token");
+    const payload = token && validateJwt(token, { teamId: true });
 
-    if (!token || !verifyJwt(token, "participant")) {
+    if (!payload) {
       return NextResponse.redirect(new URL("/login", req.url));
+    }
+
+    // payload.teamId is now trusted
+  }
+
+  if (pathname.startsWith("/admin")) {
+    const token = getToken(req, "admin_token");
+    const payload = token && validateJwt(token, { role: "admin" });
+
+    if (!payload) {
+      return NextResponse.redirect(new URL("/login-admin", req.url));
     }
   }
 
-  // Admin area
-  if (pathname.startsWith("/admin")) {
-    const token = getToken(req, "admin");
+  if (pathname.startsWith("/round1/quiz")) {
+    const token = getToken(req, "round1_token");
+    const payload = token && validateJwt(token, { teamId: true });
 
-    if (!token || !verifyJwt(token, "admin")) {
-      return NextResponse.redirect(new URL("/login-admin", req.url));
+    if (!payload) {
+      return NextResponse.redirect(new URL("/round1/login", req.url));
     }
   }
 

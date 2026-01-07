@@ -74,8 +74,8 @@ export async function POST(req: NextRequest) {
       teamName,
       collegeName: collegeNameToSave,
       players: [
-        { name: p1name, email: p1email, phone: p1phone },
-        { name: p2name, email: p2email, phone: p2phone },
+        { name: p1name, email: p1email.toLowerCase(), phone: p1phone },
+        { name: p2name, email: p2email.toLowerCase(), phone: p2phone },
       ],
     });
 

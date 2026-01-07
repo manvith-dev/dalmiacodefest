@@ -1,6 +1,7 @@
 export const revalidate = 0;
 
 import { H2 } from "@/components/Typography";
+import { ITeam } from "@/models/team.model";
 import {
   Table,
   TableBody,
@@ -24,10 +25,7 @@ import Team from "@/models/team.model";
 async function getParticipants() {
   await connectDB();
 
-  return Team.find()
-    .select("registrationId teamName collegeName createdAt")
-    .sort({ createdAt: -1 })
-    .lean();
+  return Team.find().sort({ createdAt: -1 }).lean();
 }
 
 export default async function ParticipantsListPage() {
@@ -41,7 +39,7 @@ export default async function ParticipantsListPage() {
   );
 }
 
-function TableList({ teams }: { teams: TeamRow[] }) {
+function TableList({ teams }: { teams: ITeam[] }) {
   return (
     <Table>
       <TableCaption>A list of registered participants.</TableCaption>
@@ -51,7 +49,8 @@ function TableList({ teams }: { teams: TeamRow[] }) {
           <TableHead>Registration ID</TableHead>
           <TableHead>Team Name</TableHead>
           <TableHead>College Name</TableHead>
-          <TableHead className="text-right">Registered On</TableHead>
+          <TableHead>Registered On</TableHead>
+          <TableHead className="text-right">Attendence</TableHead>
         </TableRow>
       </TableHeader>
 
@@ -62,14 +61,15 @@ function TableList({ teams }: { teams: TeamRow[] }) {
             <TableCell className="font-medium">{team.registrationId}</TableCell>
             <TableCell>{team.teamName}</TableCell>
             <TableCell>
-              <TableCell>
-                {team.collegeName
-                  .replace(/-/g, " ")
-                  .replace(/\b\w/g, (c) => c.toUpperCase())}
-              </TableCell>
+              {team.collegeName
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, (c) => c.toUpperCase())}
             </TableCell>
-            <TableCell className="text-right">
+            <TableCell>
               {new Date(team.createdAt).toLocaleDateString()}
+            </TableCell>
+            <TableCell className="flex items-center justify-end">
+              <div className="bg-secondary border p-4 rounded-md"></div>
             </TableCell>
           </TableRow>
         ))}

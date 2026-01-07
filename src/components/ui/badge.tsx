@@ -20,7 +20,7 @@ const badgeVariants = cva(
         hard: "bg-hard text-background [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         medium:
           "bg-medium text-background [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        easy: "bg-easy text-background [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+        easy: "bg-easy text-background  [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
       },
     },
     defaultVariants: {

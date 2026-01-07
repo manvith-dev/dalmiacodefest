@@ -1,25 +1,35 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-interface loginTokenPayload extends JwtPayload {
+interface LoginTokenPayload extends JwtPayload {
+  role?: "admin" | "participant";
   teamId?: string;
 }
 
-export function verifyJwt(
+type TokenChecks = Partial<{
+  role: LoginTokenPayload["role"];
+  teamId: true; // must exist
+}>;
+
+export function validateJwt(
   token: string,
-  role: "admin" | "participant"
-): boolean {
+  checks?: TokenChecks
+): LoginTokenPayload | null {
   try {
-    const decoded = jwt.verify(
+    const payload = jwt.verify(
       token,
       process.env.JWT_SECRET as string
-    ) as loginTokenPayload;
+    ) as LoginTokenPayload;
 
-    if (role === "admin") {
-      return decoded.role === "admin";
+    if (checks?.role && payload.role !== checks.role) {
+      return null;
     }
 
-    return true;
+    if (checks?.teamId && !payload.teamId) {
+      return null;
+    }
+
+    return payload;
   } catch {
-    return false;
+    return null;
   }
 }
