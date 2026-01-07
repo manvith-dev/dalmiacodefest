@@ -1,7 +1,6 @@
 "use client";
 
 import useQuiz from "@/features/round1/controllers/useQuiz";
-import { Timer } from "@/features/round1/components/Timer";
 import { SideBar } from "@/features/round1/components/Sidebar";
 import { QuizCard } from "@/features/round1/components/QuizCard";
 import { QuizProvider } from "@/features/round1/controllers/QuizContext";
@@ -45,7 +44,7 @@ export default function QuizPage() {
 
   return (
     <QuizProvider questions={quiz.questions}>
-      <section className="min-h-screen bg-grid grid grid-cols-1 lg:grid-cols-[3fr_1fr] xl:grid-cols-[4fr_1fr]">
+      <section className="min-h-screen bg-grid grid grid-cols-1 lg:grid-cols-[3fr_1fr] xl:grid-cols-[4fr_1fr] py-8">
         <main className="flex flex-col items-center justify-center">
           <QuizCard />
         </main>

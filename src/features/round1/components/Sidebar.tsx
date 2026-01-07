@@ -14,7 +14,7 @@ export function SideBar() {
   const { submit, secondsLeft } = useQuizContext();
   return (
     <aside className="border-l bg-background p-4 flex flex-col h-full">
-      <div className="space-y-6">
+      <div className="flex flex-col space-y-6">
         <Score />
         <Pagination />
         <Timer />
