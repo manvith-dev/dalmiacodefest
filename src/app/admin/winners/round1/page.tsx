@@ -11,6 +11,7 @@ import {
 
 import Round1Player from "@/features/round1/models/Round1Players.model";
 import connectDB from "@/lib/db";
+import "@/models/team.model";
 
 export default function RoundOneWinnersPage() {
   return (
@@ -45,7 +46,9 @@ async function LeaderBoardTable() {
       return <div>No Data Found</div>;
     }
   } catch (err) {
-    return <div>Error occurred while loading leaderboard</div>;
+    return (
+      <div>{(err as string) + "Error occurred while loading leaderboard"}</div>
+    );
   }
 
   return (
