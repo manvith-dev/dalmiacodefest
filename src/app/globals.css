@@ -179,3 +179,27 @@
     overflow-wrap: break-word;
   }
 }
+
+/* Nice vertical scrollbar */
+.scrollbar {
+  scrollbar-width: thin;
+  /* Firefox */
+  scrollbar-color: #525252 transparent;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #525252;
+  border-radius: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #737373;
+}

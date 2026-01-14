@@ -34,5 +34,14 @@ export function proxy(req: NextRequest) {
     }
   }
 
+  if (pathname.startsWith("/round2/game")) {
+    const token = getToken(req, "round2_token");
+    const payload = token && validateJwt(token, { teamId: true });
+
+    if (!payload) {
+      return NextResponse.redirect(new URL("/round2/login", req.url));
+    }
+  }
+
   return NextResponse.next();
 }

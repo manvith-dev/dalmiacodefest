@@ -42,5 +42,6 @@ next-env.d.ts
 
 #Game Data
 /src/features/round1/config/questions.ts
+/src/features/round2/config/questions.ts
 /src/scripts/seed-round1.ts
-/src/app/api/seed/round1/route.ts
+/src/app/api/seed/route.ts
