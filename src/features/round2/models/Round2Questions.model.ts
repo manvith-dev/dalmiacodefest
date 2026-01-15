@@ -2,14 +2,18 @@ import mongoose from "mongoose";
 
 const Round2QuestionSchema = new mongoose.Schema(
   {
-    question: { type: Number, required: true },
+    questionNo: { type: Number, required: true },
     language: {
       type: String,
-      enum: ["java", "cpp", "py"],
+      enum: ["java", "cpp", "python"],
       required: true,
     },
+
     code: { type: String, required: true },
-    expectedOutput: { type: [String], required: true },
+    expectedOutput: { type: String, required: true },
+    tries: { type: Number, default: 0 },
+    maxMarks: { type: Number, required: true },
+    solved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

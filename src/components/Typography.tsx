@@ -51,7 +51,9 @@ const P: React.FC<Props> = ({ className, children }) => {
 
 const Blockquote: React.FC<Props> = ({ className, children }) => {
   return (
-    <blockquote className={`mt-6 border-l-2 pl-6 italic ${className}`}>
+    <blockquote
+      className={`border-l-2 border-muted pl-4 text-sm text-muted-foreground ${className}`}
+    >
       {children}
     </blockquote>
   );
@@ -79,7 +81,7 @@ const Large: React.FC<Props> = ({ className, children }) => {
 
 const Muted: React.FC<Props> = ({ className, children }) => {
   return (
-    <p className={`text-sm text-muted-foreground ${className}`}>{children}.</p>
+    <p className={`text-sm text-muted-foreground ${className}`}>{children}</p>
   );
 };
 

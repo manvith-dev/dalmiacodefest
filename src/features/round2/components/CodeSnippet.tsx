@@ -19,7 +19,7 @@ export default function CodeSnippet({
   // Inside CodeSnippet.tsx
   return (
     <div
-      className="bg-[#24292d] w-full rounded-md p-4 font-mono text-sm"
+      className="bg-[#24292d] w-full rounded-md pb-4 px-4 font-mono text-sm"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

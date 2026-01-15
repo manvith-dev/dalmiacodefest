@@ -1,9 +1,10 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useCallback, useContext } from "react";
 import useQuiz from "./useQuiz";
 import { Round1QuestionsType } from "../round_one.types";
-import { useTimer } from "./useTimer";
+import { useTimer } from "@/components/layout/games/useTimer";
+import { END_TIME_KEY } from "../config/constants";
 
 type QuizContextType = ReturnType<typeof useQuiz> & {
   secondsLeft: number;
@@ -20,9 +21,14 @@ export function QuizProvider({
 }) {
   const quiz = useQuiz(questions);
 
-  const secondsLeft = useTimer((remaining) => {
-    quiz.submit(remaining);
-  });
+  const onTimeUp = useCallback(
+    (remaining: number) => {
+      quiz.submit(remaining);
+    },
+    [quiz]
+  );
+
+  const secondsLeft = useTimer(END_TIME_KEY, onTimeUp);
 
   return (
     <QuizContext.Provider value={{ ...quiz, secondsLeft }}>

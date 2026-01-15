@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { END_TIME_KEY } from "../config/constants";
 
-export function useTimer(onTimeUp: (secondsLeft: number) => void) {
+export function useTimer(
+  storageKey: string,
+  onTimeUp: (secondsLeft: number) => void
+) {
   const [endTime, setEndTime] = useState<number | null>(null);
-  const [secondsLeft, setSecondsLeft] = useState<number>(0);
+  const [secondsLeft, setSecondsLeft] = useState(0);
 
-  // Read localStorage ONLY on client
   useEffect(() => {
-    const stored = localStorage.getItem(END_TIME_KEY);
+    const stored = localStorage.getItem(storageKey);
     const resolvedEndTime = stored ? Number(stored) : Date.now();
-
     setEndTime(resolvedEndTime);
-  }, []);
+  }, [storageKey]);
 
   useEffect(() => {
     if (endTime === null) return;

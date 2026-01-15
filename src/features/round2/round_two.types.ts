@@ -1,10 +1,10 @@
-export type Round2Questions = {
-  question: number;
-  language: "java" | "cpp" | "py";
-  code: string;
-  expectedOutput: string[];
+export type Language = "java" | "cpp" | "python";
 
-  // NEW
+export type Round2QuestionsType = {
+  questionNo: number;
+  language: Language;
+  code: string;
+  expectedOutput: string;
   tries: number;
   maxMarks: number;
   solved: boolean;
