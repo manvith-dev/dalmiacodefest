@@ -44,8 +44,8 @@ export default function QuizPage() {
 
   return (
     <QuizProvider questions={quiz.questions}>
-      <section className="min-h-screen bg-grid grid grid-cols-1 lg:grid-cols-[3fr_1fr] xl:grid-cols-[4fr_1fr] py-8">
-        <main className="flex flex-col items-center justify-center">
+      <section className="bg-grid grid grid-cols-1 py-4 gap-4 lg:p-0 lg:grid-cols-[3fr_1fr] xl:grid-cols-[4fr_1fr] min-w-screen">
+        <main className="flex items-center justify-center">
           <QuizCard />
         </main>
         <SideBar />

@@ -59,7 +59,7 @@ function RoundCard({
   rules: string[];
 }) {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className=" w-full max-w-sm">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -72,12 +72,6 @@ function RoundCard({
           ))}
         </ul>
       </CardContent>
-
-      <CardFooter>
-        <p className="text-xs text-muted-foreground">
-          Read rules before starting
-        </p>
-      </CardFooter>
     </Card>
   );
 }

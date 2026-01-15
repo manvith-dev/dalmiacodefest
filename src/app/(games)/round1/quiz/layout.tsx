@@ -6,9 +6,9 @@ export default function QuizLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex flex-col">
+    <main className="flex flex-col min-h-screen">
       <Header roundNumber={1} roundName="Quiz" />
-      <div className="flex-1 overflow-hidden">{children}</div>
+      <div className="flex flex-1">{children}</div>
     </main>
   );
 }

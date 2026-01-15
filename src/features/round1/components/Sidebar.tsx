@@ -7,33 +7,50 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { H2, H4, P } from "@/components/Typography";
+import { P } from "@/components/Typography";
 import { Timer } from "./Timer";
+import { useState } from "react";
 
 export function SideBar() {
   const { submit, secondsLeft } = useQuizContext();
+  const [loading, setLoading] = useState<boolean>(false);
   return (
-    <aside className="border-l bg-background p-4 flex flex-col h-full">
-      <div className="flex flex-col space-y-6">
-        <Score />
+    <aside className="border bg-background p-4 flex flex-col h-full">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-row gap-2 items-center justify-between">
+          <Score />
+          <div className="flex">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button disabled={loading} className="flex w-full">
+                  Submit
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <div className="flex flex-col gap-4">
+                  <P>Are you sure you want to submit?</P>
+                  <Button
+                    disabled={loading}
+                    onClick={async () => {
+                      try {
+                        setLoading(true);
+                        submit(secondsLeft);
+                      } catch (err) {
+                        console.error(err);
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                  >
+                    Confirm Submit
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
         <Pagination />
         <Timer />
-      </div>
-
-      <div className="mt-6">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button className="w-full">Submit</Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="flex flex-col gap-4">
-              <P>Are you sure you want to submit?</P>
-              <Button onClick={() => submit(secondsLeft)}>
-                Confirm Submit
-              </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
       </div>
     </aside>
   );

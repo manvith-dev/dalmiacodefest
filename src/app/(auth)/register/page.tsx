@@ -34,14 +34,7 @@ export type RegisterFormValues = {
 
 export default function RegisterPage() {
   return (
-    <main className="flex flex-row">
-      <section className="bg-secondary hidden md:flex flex-1 min-h-screen">
-        <Image
-          src={iconPattern}
-          alt="random patterns"
-          className="object-cover opacity-60"
-        />
-      </section>
+    <main className="bg-stone-950 flex items-center justify-center">
       <RegisterForm />
     </main>
   );
@@ -123,7 +116,7 @@ function RegisterForm() {
             e.preventDefault();
             handleFormSubmit();
           }}
-          className="flex flex-col gap-6 w-full items-center justify-center p-4 sm:p-8 border rounded-md"
+          className="bg-background flex flex-col gap-6 md:w-4/5 lg:w-3/5 xl:w-2/5 items-center justify-center p-4 sm:p-8 border rounded-md"
         >
           <div className="flex flex-col sm:flex-row gap-4 w-full items-center justify-center">
             <InputWithLabel

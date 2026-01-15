@@ -4,7 +4,7 @@ export const EVENT = {
   description:
     "A three-round tech challenge where teams battle through, rapid-fire logic, design, and real coding. Built to test how fast you think, how well you create, and how smart you solve",
   date: "2026-01-31",
-  time: "9:00 AM - 12:00 PM",
+  time: "9:00 AM onwards",
   startAt: "2026-01-31T09:00:00+05:30",
   WhatsAppGroupLink: "https://chat.whatsapp.com/L2rdvJSgKU7IciLV1gP7EO",
 };
@@ -26,7 +26,6 @@ export const GAMES = {
     rules: [
       "Buggy code is provided to each team.",
       "Solutions must compile and run correctly.",
-      "Partial fixes earn partial points.",
     ],
   },
 
@@ -35,7 +34,7 @@ export const GAMES = {
     description: "Solve logical problems using code.",
     rules: [
       "Problems increase in difficulty.",
-      "Any allowed programming language may be used.",
+      "Languages allowed: C++ / Java / Python",
       "Scoring is based on correctness and efficiency.",
     ],
   },

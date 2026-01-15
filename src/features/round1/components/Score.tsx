@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { useQuizContext } from "../controllers/QuizContext";
 
 export function Score() {
@@ -9,8 +10,8 @@ export function Score() {
     return total;
   }, 0);
   return (
-    <div className="flex bg-muted py-1 px-4 rounded-full border text-amber-400 font-bold">
+    <Badge variant={"medium"} className="flex py-1 px-4  font-bold">
       Score {score}
-    </div>
+    </Badge>
   );
 }

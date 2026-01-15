@@ -112,7 +112,9 @@ export default function HeroSection() {
         <Separator orientation="vertical" />
         <div className="flex flex-col flex-1 items-center justify-center">
           <div className="hidden sm:flex flex-col items-center justify-center rounded-md py-8">
-            <Muted>presented by</Muted>
+            <Muted>{"presented by"}</Muted>
+            <P>{"SFC Program B.Sc.I.T. & B.Sc.C.S"}</P>
+            <Muted>{"and"}</Muted>
             <Image
               src={"/DlitaLogo.png"}
               alt="dalmia dlita logo"
@@ -131,7 +133,7 @@ export default function HeroSection() {
         </div>
       </div>
       <div className="bg-yellow-300 text-black font-bold w-full text-center shadow-md z-40">
-        Registration ends on 25th January 2026!
+        Registration ends on 30th January 2026!
       </div>
     </div>
   );
