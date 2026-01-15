@@ -8,12 +8,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Score from "./Score";
 import { Badge } from "@/components/ui/badge";
-import { Timer } from "./Timer";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ProblemContainer() {
   const { questionNo, question, onNext, onCheck, submit, secondsLeft } =
     useRound2Context();
   const [userAnswer, setUserAnswer] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleNext = () => {
     setUserAnswer("");
@@ -34,13 +35,31 @@ export default function ProblemContainer() {
 
         <div className="flex gap-2">
           <Score />
-          <Timer />
         </div>
         <div className="flex gap-2">
-          <Button size="sm" variant="ghost" onClick={handleNext}>
+          <Button
+            size="sm"
+            variant="secondary"
+            className="bg-foreground text-background hover:text-foreground"
+            onClick={handleNext}
+          >
             Next
           </Button>
-          <Button size="sm" onClick={() => submit(secondsLeft)}>
+          <Button
+            size="sm"
+            disabled={loading}
+            onClick={async () => {
+              try {
+                setLoading(true);
+                await submit(secondsLeft);
+              } catch (err) {
+                console.log(err);
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            {loading && <Spinner />}
             Submit
           </Button>
         </div>

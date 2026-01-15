@@ -49,11 +49,21 @@ export async function POST(req: NextRequest) {
       { $sample: { size: questionsCount } },
     ]);
 
-    const round2player = await Round2Player.findOneAndUpdate(
-      { teamId: team._id },
-      { startTime: new Date(), score: null, timeTaken: null },
-      { upsert: true, new: true }
-    );
+    const existingPlayer = await Round2Player.findOne({ teamId: team._id });
+
+    if (existingPlayer) {
+      return NextResponse.json(
+        { error: "Round 2 already started. Please contact event organizer" },
+        { status: 403 }
+      );
+    }
+
+    const round2player = await Round2Player.create({
+      teamId: team._id,
+      startTime: new Date(),
+      score: null,
+      timeTaken: null,
+    });
 
     const endTime = round2player.startTime.getTime() + ROUND2DURATION * 1000;
 

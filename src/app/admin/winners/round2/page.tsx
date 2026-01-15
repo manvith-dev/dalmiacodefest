@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import Round1Player from "@/features/round1/models/Round1Players.model";
+import Round2Player from "@/features/round2/models/Round2Players.model";
 import connectDB from "@/lib/db";
 import "@/models/team.model";
 
@@ -17,7 +17,7 @@ export default function RoundOneWinnersPage() {
   return (
     <main className="flex flex-col items-center gap-6">
       <section className="flex flex-col">
-        <H2>Round 1 Players Ranking</H2>
+        <H2>Round 2 Players Ranking</H2>
         <Muted>{"Based on score and time taken (if score is tied)"}</Muted>
       </section>
       <LeaderBoardTable />
@@ -29,11 +29,11 @@ export default function RoundOneWinnersPage() {
 }
 
 async function LeaderBoardTable() {
-  let round1analysis;
+  let round2analysis;
   try {
     await connectDB();
 
-    round1analysis = await Round1Player.find()
+    round2analysis = await Round2Player.find()
       .populate("teamId")
       .sort({
         score: -1,
@@ -42,7 +42,7 @@ async function LeaderBoardTable() {
       })
       .lean();
 
-    if (!round1analysis || round1analysis.length === 0) {
+    if (!round2analysis || round2analysis.length === 0) {
       return <div>No Data Found</div>;
     }
   } catch (err) {
@@ -54,7 +54,7 @@ async function LeaderBoardTable() {
   return (
     <section className="w-full px-8 ">
       <Table className="w-full">
-        <TableCaption>Round 1 Leaderboard</TableCaption>
+        <TableCaption>Round 2 Leaderboard</TableCaption>
 
         <TableHeader>
           <TableRow>
@@ -69,7 +69,7 @@ async function LeaderBoardTable() {
         </TableHeader>
 
         <TableBody>
-          {round1analysis.map((player: any, index: number) => {
+          {round2analysis.map((player: any, index: number) => {
             const team = player.teamId;
 
             return (

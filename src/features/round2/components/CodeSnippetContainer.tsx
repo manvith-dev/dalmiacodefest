@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useRound2Context } from "../controllers/RoundTwoContesxt";
 import { Copy } from "lucide-react";
+import { Timer } from "./Timer";
 import {
   Select,
   SelectContent,
@@ -26,6 +27,7 @@ export default function CodeSnippetContainer() {
     <section className="bg-card flex-1 flex flex-col min-w-0 rounded-md">
       <div className="bg-card flex flex-row items-center justify-between w-full py-2 px-4 rounded-t-md ">
         <span>Code</span>
+        <Timer />
         <div className="flex gap-2 items-center justify-center">
           <Select
             onValueChange={(value) =>
