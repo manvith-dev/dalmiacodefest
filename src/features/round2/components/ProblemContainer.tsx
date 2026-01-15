@@ -1,14 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { H4, Muted } from "@/components/Typography";
+import { P, H4, Muted } from "@/components/Typography";
 import { InputWithLabel } from "@/features/auth/components/InputWithLabel";
 import { useRound2Context } from "../controllers/RoundTwoContesxt";
 import { useState } from "react";
 import { toast } from "sonner";
 import Score from "./Score";
 import { Badge } from "@/components/ui/badge";
-import { Spinner } from "@/components/ui/spinner";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function ProblemContainer() {
   const { questionNo, question, onNext, onCheck, submit, secondsLeft } =
@@ -36,7 +40,7 @@ export default function ProblemContainer() {
         <div className="flex gap-2">
           <Score />
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center justify-center gap-2">
           <Button
             size="sm"
             variant="secondary"
@@ -45,23 +49,35 @@ export default function ProblemContainer() {
           >
             Next
           </Button>
-          <Button
-            size="sm"
-            disabled={loading}
-            onClick={async () => {
-              try {
-                setLoading(true);
-                await submit(secondsLeft);
-              } catch (err) {
-                console.log(err);
-              } finally {
-                setLoading(false);
-              }
-            }}
-          >
-            {loading && <Spinner />}
-            Submit
-          </Button>
+          <div className="flex">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button disabled={loading} className="flex w-full">
+                  Submit
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <div className="flex flex-col gap-4">
+                  <P>Are you sure you want to submit?</P>
+                  <Button
+                    disabled={loading}
+                    onClick={async () => {
+                      try {
+                        setLoading(true);
+                        submit(secondsLeft);
+                      } catch (err) {
+                        console.error(err);
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                  >
+                    Confirm Submit
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </div>
 

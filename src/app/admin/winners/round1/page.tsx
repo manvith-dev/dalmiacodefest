@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { H2, Muted } from "@/components/Typography";
 import {
   Table,
