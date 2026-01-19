@@ -10,6 +10,7 @@ import {
 import { P } from "@/components/Typography";
 import { Timer } from "./Timer";
 import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export function SideBar() {
   const { submit, secondsLeft } = useQuizContext();
@@ -34,7 +35,7 @@ export function SideBar() {
                     onClick={async () => {
                       try {
                         setLoading(true);
-                        submit(secondsLeft);
+                        await submit(secondsLeft);
                       } catch (err) {
                         console.error(err);
                       } finally {
@@ -42,6 +43,7 @@ export function SideBar() {
                       }
                     }}
                   >
+                    {loading && <Spinner />}
                     Confirm Submit
                   </Button>
                 </div>

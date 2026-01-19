@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ProblemContainer() {
   const { questionNo, question, onNext, onCheck, submit, secondsLeft } =
@@ -64,7 +65,7 @@ export default function ProblemContainer() {
                     onClick={async () => {
                       try {
                         setLoading(true);
-                        submit(secondsLeft);
+                        await submit(secondsLeft);
                       } catch (err) {
                         console.error(err);
                       } finally {
@@ -72,6 +73,7 @@ export default function ProblemContainer() {
                       }
                     }}
                   >
+                    {loading && <Spinner />}
                     Confirm Submit
                   </Button>
                 </div>

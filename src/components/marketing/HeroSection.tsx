@@ -17,7 +17,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const Data = {
-  time: "9:00 AM - 12:00 PM",
   location: "PDLC, Mumbai",
   map_link: "https://maps.app.goo.gl/mXsyMt9KEBXHqfhy8",
 };
@@ -41,7 +40,7 @@ export default function HeroSection() {
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -54,11 +53,14 @@ export default function HeroSection() {
   return (
     <div
       className="flex flex-col gap-4 px-8 md:px-16 items-center relative min-h-screen max-w-screen overflow-hidden"
-      style={{ backgroundImage: "url('/HeroImage.png')" }}
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/HeroImage.jpg')",
+      }}
     >
       <Navbar />
       <Image
-        src={"/PdlcBanner.png"}
+        src={"/PdlcBanner.webp"}
         alt="college logo"
         width={16 * 30}
         height={164}
@@ -116,7 +118,7 @@ export default function HeroSection() {
             <P>{"SFC Program B.Sc.I.T. & B.Sc.C.S"}</P>
             <Muted>{"and"}</Muted>
             <Image
-              src={"/DlitaLogo.png"}
+              src={"/DlitaLogo.webp"}
               alt="dalmia dlita logo"
               width={164}
               height={164}
@@ -133,7 +135,7 @@ export default function HeroSection() {
         </div>
       </div>
       <div className="bg-yellow-300 text-black font-bold w-full text-center shadow-md z-40">
-        Registration ends on 30th January 2026!
+        Registration ends on 5th February 2026!
       </div>
     </div>
   );

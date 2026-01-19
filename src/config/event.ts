@@ -3,9 +3,9 @@ export const EVENT = {
   tagline: "IoT - Ignition of Talents",
   description:
     "A three-round tech challenge where teams battle through, rapid-fire logic, design, and real coding. Built to test how fast you think, how well you create, and how smart you solve",
-  date: "2026-01-31",
+  date: "2026-02-6",
   time: "9:00 AM onwards",
-  startAt: "2026-01-31T09:00:00+05:30",
+  startAt: "2026-02-06T09:00:00+05:30",
   WhatsAppGroupLink: "https://chat.whatsapp.com/L2rdvJSgKU7IciLV1gP7EO",
 };
 

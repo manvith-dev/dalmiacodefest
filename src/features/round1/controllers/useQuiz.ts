@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Round1QuestionsType } from "../round_one.types";
 import { STORAGE_KEY, END_TIME_KEY } from "../config/constants";
 import { useRouter } from "next/navigation";
+import { ROUND1DURATION } from "../config/constants";
 
 export default function useQuiz(round1Questions: Round1QuestionsType[]) {
   const router = useRouter();
@@ -40,8 +41,8 @@ export default function useQuiz(round1Questions: Round1QuestionsType[]) {
               isCorrect: selected === q.correctOption,
               isVisited: true,
             }
-          : q
-      )
+          : q,
+      ),
     );
     onNext();
   };
@@ -53,6 +54,14 @@ export default function useQuiz(round1Questions: Round1QuestionsType[]) {
       }
       return total;
     }, 0);
+
+    sessionStorage.setItem(
+      "round1_result",
+      JSON.stringify({
+        score,
+        timeTaken: ROUND1DURATION - secondsLeft,
+      }),
+    );
 
     try {
       const res = await fetch("/api/round1/submission", {

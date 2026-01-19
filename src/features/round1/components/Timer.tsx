@@ -19,8 +19,8 @@ export function Timer() {
   const ringColor = isCritical
     ? "stroke-hard"
     : isWarning
-    ? "stroke-medium"
-    : "stroke-primary";
+      ? "stroke-medium"
+      : "stroke-easy";
 
   return (
     <div className="flex items-center justify-center my-8">
@@ -61,8 +61,8 @@ export function Timer() {
               isCritical
                 ? "text-hard"
                 : isWarning
-                ? "text-medium"
-                : "text-primary",
+                  ? "text-medium"
+                  : "text-easy",
             ].join(" ")}
           >
             {m}:{s.toString().padStart(2, "0")}
