@@ -73,7 +73,8 @@ function LoginForm() {
       }
 
       toast.success(data.message || "Login Successful");
-      router.push("/participants/dashboard");
+      router.replace("/participants/dashboard");
+      router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {

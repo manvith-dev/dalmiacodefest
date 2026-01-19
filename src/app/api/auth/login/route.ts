@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     if (typeof regiId !== "string" || typeof email !== "string") {
       return NextResponse.json(
         { error: "Invalid credentials" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -25,19 +25,19 @@ export async function POST(req: NextRequest) {
     if (!team) {
       return NextResponse.json(
         { error: "Wrong Registration ID Or Team does not exist." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (team.players[0].email == email || team.players[1].email == email) {
       const response = NextResponse.json(
         { message: "Login Successful" },
-        { status: 200 }
+        { status: 200 },
       );
       const token = jwt.sign(
         { teamId: team._id },
         process.env.JWT_SECRET as string,
-        { expiresIn: "7d" }
+        { expiresIn: "7d" },
       );
 
       response.cookies.set("participant_token", token, {
