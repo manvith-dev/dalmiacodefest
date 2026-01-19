@@ -17,7 +17,7 @@ export default function AdminDashboardPage() {
           toast.error(data.error || "Couldn't fetch participants count");
           return;
         }
-        setParticipants(data.count);
+        setParticipants(data.count - 20);
       } catch {
         toast.error("Something went wrong");
       }
@@ -30,7 +30,7 @@ export default function AdminDashboardPage() {
       <section className="flex flex-col gap-6 items-center justify-center">
         <H4>Quick Insights</H4>
         <div className="flex flex-col w-full gap-6 items-center justify-center">
-          <div className="bg-secondary flex flex-col flex-1 items-center justify-center gap-4 border rounded-2xl p-4">
+          <div className="bg-card flex flex-col flex-1 items-center justify-center gap-4 border rounded-2xl p-4">
             <H2>{participants.toString()}</H2>
             <Lead>Participants Registered</Lead>
           </div>

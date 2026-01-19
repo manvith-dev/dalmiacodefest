@@ -12,20 +12,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface TeamRow {
-  registrationId: string;
-  teamName: string;
-  collegeName: string;
-  createdAt: Date;
-}
-
 import connectDB from "@/lib/db";
 import Team from "@/models/team.model";
 
 async function getParticipants() {
   await connectDB();
 
-  return Team.find().sort({ createdAt: -1 }).lean();
+  // Only fetch teams whose registrationId does NOT start with "REG-"
+  return Team.find({ registrationId: { $not: /^REG-/ } })
+    .sort({ createdAt: -1 })
+    .lean();
 }
 
 export default async function ParticipantsListPage() {
