@@ -6,7 +6,6 @@ import CodeSnippetContainer from "@/features/round2/components/CodeSnippetContai
 import ProblemContainer from "@/features/round2/components/ProblemContainer";
 import { STORAGE_KEY } from "@/features/round2/config/constants";
 import { Round2QuestionsType } from "@/features/round2/round_two.types";
-import useRound2Debug from "@/features/round2/controllers/useRound2Debug";
 import { toast } from "sonner";
 import { Round2Provider } from "@/features/round2/controllers/RoundTwoContesxt";
 
@@ -42,7 +41,7 @@ export default function Round2Page() {
   }
   return (
     <Round2Provider questions={r2questions}>
-      <div className="flex flex-col md:flex-row gap-2 p-4 min-h-0">
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-4 p-4 h-full">
         <CodeSnippetContainer />
         <ProblemContainer />
       </div>

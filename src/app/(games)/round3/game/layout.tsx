@@ -1,13 +1,13 @@
 import Header from "@/components/layout/games/Header";
 
-export default function Round2Layout({
+export default function Round3Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <main className="flex flex-col min-h-screen md:h-screen">
-      <Header roundNumber={2} roundName="The-Bug" />
+      <Header roundNumber={3} roundName="CodeMatics" />
       {children}
     </main>
   );

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     ) {
       return NextResponse.json(
         { error: "Invalid submission data" },
-        { status: 400 }
+        { status: 422 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     if (!token) {
       return NextResponse.json(
         { error: "No valid session, you need to login first" },
-        { status: 400 }
+        { status: 401 },
       );
     }
 
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     if (!decoded || !decoded.teamId) {
       return NextResponse.json(
         { error: "Invalid or expired session" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -50,14 +50,14 @@ export async function POST(req: NextRequest) {
     if (!player) {
       return NextResponse.json(
         { error: "Session not found or expired" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (player.score !== null) {
       return NextResponse.json(
         { error: "Quiz already submitted" },
-        { status: 409 }
+        { status: 409 },
       );
     }
     const timeTaken = ROUND1DURATION - secondsLeft;
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     if (timeTaken < 0 || timeTaken > elapsed + 10) {
       return NextResponse.json(
         { error: "Invalid submission timing" },
-        { status: 400 }
+        { status: 422 },
       );
     }
 
@@ -77,13 +77,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "Quiz Submitted Successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     console.error("Round1 submission error:", err);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

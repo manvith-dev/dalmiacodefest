@@ -24,7 +24,7 @@ export default function CodeSnippetContainer() {
     }
   };
   return (
-    <section className="bg-card flex-1 flex flex-col min-w-0 rounded-md">
+    <section className="bg-card md:col-span-1 rounded-md">
       <div className="bg-card flex flex-row items-center justify-between w-full py-2 px-4 rounded-t-md ">
         <span>Code</span>
         <Timer />
