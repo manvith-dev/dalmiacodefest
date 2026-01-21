@@ -1,6 +1,6 @@
 export type Round3QuestionsType = {
   questionNo: number;
-  question: string;
+  problemStatement: string;
   expectedOutput: string;
   tries: number;
   maxMarks: number;

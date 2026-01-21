@@ -1,48 +1,33 @@
 import { useState, useEffect } from "react";
 import { STORAGE_KEY, END_TIME_KEY } from "../config/constants";
 import { useRouter } from "next/navigation";
-import { Round2QuestionsType } from "../round_two.types";
-import { ROUND2DURATION } from "../config/constants";
+import { Round3QuestionsType } from "../round_three.types";
+import { ROUND3DURATION } from "../config/constants";
 
-export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
+export default function useRound3CodeMatics(
+  round3Questions: Round3QuestionsType[],
+) {
   const router = useRouter();
   const [questions, setQuestions] =
-    useState<Round2QuestionsType[]>(round2Questions);
+    useState<Round3QuestionsType[]>(round3Questions);
 
-  const [questionNo, setQuestionNo] = useState<1 | 2>(1);
-  const [language, setLanguage] = useState<"java" | "cpp" | "python">("cpp");
+  const [questionNo, setQuestionNo] = useState<number>(1);
 
   useEffect(() => {
-    if (round2Questions.length === 0) return;
-    setQuestions(round2Questions);
-  }, [round2Questions]);
+    if (round3Questions.length === 0) return;
+    setQuestions(round3Questions);
+  }, [round3Questions]);
 
   useEffect(() => {
     if (questions.length === 0) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(questions));
   }, [questions]);
 
-  const visibleQuestions = questions.filter((q) => q.language === language);
-  const question = visibleQuestions.find((q) => q.questionNo === questionNo);
-
-  if (!question) {
-    throw new Error(
-      `Invariant violation: No question for questionNo=${questionNo}, language=${language}`,
-    );
-  }
-
-  if (!question) {
-    throw new Error(
-      `Invariant violation: No question for questionNo=${questionNo}, language=${language}`,
-    );
-  }
-
-  const onSwitchLanguage = (language: "java" | "cpp" | "python") => {
-    setLanguage(language);
-  };
+  const question = questions.find((q) => q.questionNo === questionNo) ?? null;
+  const totalQuestions = questions.length;
 
   const onNext = () => {
-    setQuestionNo((prev) => (prev === 1 ? 2 : 1));
+    setQuestionNo((prev) => (prev >= totalQuestions ? 1 : prev + 1));
   };
 
   const onCheck = (userAnswer: string) => {
@@ -52,7 +37,7 @@ export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
 
     setQuestions((prev) =>
       prev.map((q) =>
-        q === question
+        q.questionNo === question.questionNo
           ? {
               ...q,
               solved: isCorrect ? true : q.solved,
@@ -78,11 +63,10 @@ export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
         "result",
         JSON.stringify({
           score,
-          timeTaken: ROUND2DURATION - secondsLeft,
+          timeTaken: ROUND3DURATION - secondsLeft,
         }),
       );
-
-      const res = await fetch("/api/round2/submission", {
+      const res = await fetch("/api/round3/submission", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ score, secondsLeft }),
@@ -95,8 +79,8 @@ export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
 
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(END_TIME_KEY);
-      console.log("Round 2 submitted successfully");
-      router.push("/round2/submitted");
+      console.log("Round 3 submitted successfully");
+      router.push("/round3/submitted");
     } catch (err) {
       console.error("Submit error:", err);
     }
@@ -104,11 +88,8 @@ export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
 
   return {
     questions,
-    visibleQuestions,
     questionNo,
     question,
-    language,
-    onSwitchLanguage,
     onNext,
     onCheck,
     submit,

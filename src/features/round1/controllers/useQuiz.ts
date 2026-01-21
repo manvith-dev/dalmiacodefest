@@ -56,7 +56,7 @@ export default function useQuiz(round1Questions: Round1QuestionsType[]) {
     }, 0);
 
     sessionStorage.setItem(
-      "round1_result",
+      "result",
       JSON.stringify({
         score,
         timeTaken: ROUND1DURATION - secondsLeft,

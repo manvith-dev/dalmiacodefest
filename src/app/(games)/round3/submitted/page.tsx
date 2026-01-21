@@ -37,7 +37,7 @@ export default function SubmittedPage() {
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-semibold mb-2">
-          Quiz Submitted
+          Round 3 Submitted
         </h1>
 
         <p className="text-muted-foreground mb-6">

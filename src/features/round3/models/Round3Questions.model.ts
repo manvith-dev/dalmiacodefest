@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Round3QuestionSchema = new mongoose.Schema(
   {
     questionNo: { type: Number, required: true },
-    question: { type: String, required: true },
+    problemStatement: { type: String, required: true },
     expectedOutput: { type: String, required: true },
     tries: { type: Number, default: 0 },
     maxMarks: { type: Number, required: true },
