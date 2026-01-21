@@ -53,7 +53,7 @@ export default function ProblemContainer() {
           <div className="flex">
             <Popover>
               <PopoverTrigger asChild>
-                <Button disabled={loading} className="flex w-full">
+                <Button size={"sm"} disabled={loading} className="flex w-full">
                   Submit
                 </Button>
               </PopoverTrigger>

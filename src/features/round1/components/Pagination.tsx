@@ -6,7 +6,7 @@ export function Pagination() {
 
   return (
     <div className="border rounded-lg p-4 ">
-      <div className="grid grid-cols-5 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+      <div className="grid grid-cols-8 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-2">
         {questions.map((q, i) => {
           let variant: "unanswered" | "correct" | "incorrect" = "unanswered";
 
@@ -57,7 +57,7 @@ function Box({
         "relative flex h-10 w-10 items-center justify-center rounded-md border text-sm font-medium transition-all",
         "hover:scale-[1.05] active:scale-[0.98]",
         styles[variant],
-        active && "ring-2 ring-primary ring-offset-2 ring-offset-background"
+        active && "ring-2 ring-primary ring-offset-2 ring-offset-background",
       )}
     >
       {index + 1}

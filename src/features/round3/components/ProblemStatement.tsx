@@ -8,7 +8,7 @@ export default function ProblemStatementContainer() {
   const difficulty: "easy" | "medium" | "hard" =
     questionNo === 1 ? "easy" : questionNo === 2 ? "medium" : "hard";
   return (
-    <section className="flex flex-col col-span-1 border rounded-md gap-4">
+    <section className="bg-card flex flex-col col-span-1 border rounded-md gap-4">
       <div className="bg-secondary flex flex-row w-full py-2 px-4 rounded-t-md justify-between">
         Problem Statement
         <Timer />
