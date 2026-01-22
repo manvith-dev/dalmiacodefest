@@ -4,7 +4,7 @@ import { useState } from "react";
 import { InputWithLabel } from "@/features/auth/components/InputWithLabel";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { H2, Muted, P } from "@/components/Typography";
+import { H2, Muted } from "@/components/Typography";
 import { toast } from "sonner";
 import { Combobox } from "@/components/ui/combobox";
 import { COLLEGES } from "@/config/colleges";
@@ -12,8 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import validateInputs from "@/features/auth/services/validations";
 import { useRouter } from "next/navigation";
 import HavingProblems from "@/features/auth/components/HavingProblems";
-import Image from "next/image";
-import iconPattern from "@/assets/iconPattern.png";
+import Link from "next/link";
 import {
   Popover,
   PopoverContent,
@@ -95,7 +94,7 @@ function RegisterForm() {
           {errors.map((err, i) => (
             <li key={i}>{err}</li>
           ))}
-        </ul>
+        </ul>,
       );
       return;
     }
@@ -217,27 +216,13 @@ function RegisterForm() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4 w-full  items-center">
             <p className="text-sm text-muted-foreground">
-              By registering you agree to the{" "}
-              <Button
-                type="button"
-                size="sm"
-                variant="link"
-                onClick={() => {
-                  router.push("/terms");
-                }}
-              >
-                terms
-              </Button>{" "}
-              and{" "}
-              <Button
-                type="button"
-                size="sm"
-                variant="link"
-                onClick={() => {
-                  router.push("/privacy");
-                }}
-              >
-                privacy policy
+              By registering you agree to the
+              <Button type="button" size="sm" variant="link" asChild>
+                <Link href={"/terms"}>terms</Link>
+              </Button>
+              and
+              <Button type="button" size="sm" variant="link" asChild>
+                <Link href={"/privacy"}>privacy policy</Link>
               </Button>
             </p>
           </div>

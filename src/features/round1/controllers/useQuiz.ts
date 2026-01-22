@@ -3,6 +3,7 @@ import { Round1QuestionsType } from "../round_one.types";
 import { STORAGE_KEY, END_TIME_KEY } from "../config/constants";
 import { useRouter } from "next/navigation";
 import { ROUND1DURATION } from "../config/constants";
+import { toast } from "sonner";
 
 export default function useQuiz(round1Questions: Round1QuestionsType[]) {
   const router = useRouter();
@@ -72,14 +73,16 @@ export default function useQuiz(round1Questions: Round1QuestionsType[]) {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || "Submission failed");
+        toast.error(data.error || "Quiz Not Submitted");
+        return;
       }
 
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(END_TIME_KEY);
-      console.log("Quiz submitted successfully");
+      toast.success("Quiz submitted successfully");
       router.push("/round1/submitted");
     } catch (err) {
+      toast.error("Something went wrong");
       console.error("Submit error:", err);
     }
   };

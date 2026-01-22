@@ -3,6 +3,7 @@ import { STORAGE_KEY, END_TIME_KEY } from "../config/constants";
 import { useRouter } from "next/navigation";
 import { Round2QuestionsType } from "../round_two.types";
 import { ROUND2DURATION } from "../config/constants";
+import { toast } from "sonner";
 
 export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
   const router = useRouter();
@@ -90,14 +91,16 @@ export default function useRound2Debug(round2Questions: Round2QuestionsType[]) {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || "Submission failed");
+        toast.error(data.error || "Round 2 could not be submitted");
+        return;
       }
 
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(END_TIME_KEY);
-      console.log("Round 2 submitted successfully");
+      toast.success("Round 2 submitted successfully");
       router.push("/round2/submitted");
     } catch (err) {
+      toast.error("Something went wrong");
       console.error("Submit error:", err);
     }
   };

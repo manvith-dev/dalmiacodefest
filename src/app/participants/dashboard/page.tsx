@@ -1,9 +1,8 @@
 "use client";
 
-import { H2, H3, H4, Muted } from "@/components/Typography";
+import { Muted } from "@/components/Typography";
 import { EVENT } from "@/config/event";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import WhatAppImage from "@/assets/03_Stacked/01_Digital/02_SVG/Green/Digital_Stacked_Green.svg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -22,7 +21,7 @@ export default function ParticipantDashboardPage() {
 
 function JoinWhatsapp() {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 p-4 sm:p-0">
       <Image src={WhatAppImage} alt="WhatsApp image" height={128} width={128} />
       <Button
         asChild

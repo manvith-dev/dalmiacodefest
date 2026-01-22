@@ -6,13 +6,13 @@ import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import HavingProblems from "@/features/auth/components/HavingProblems";
+import Link from "next/link";
 
 export default function ResendEmailPage() {
   return (
-    <main className="">
-      <section className="flex flex-col items-center justify-center p-4 gap-6">
+    <main className="flex items-center justify-center min-h-screen">
+      <section className="w-full flex flex-col items-center justify-center p-4 gap-6">
         <HavingProblems />
         <div className="flex flex-col items-center justify-center">
           <H2>RESEND EMAIL</H2>
@@ -30,7 +30,6 @@ function ResendEmailForm() {
     email2: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
 
   async function handleFormSubmit() {
     if (values.email1.trim().length === 0) {
@@ -106,14 +105,8 @@ function ResendEmailForm() {
             {loading && <Spinner className="mr-2" />}
             Resend confirmation email
           </Button>
-          <Button
-            type="button"
-            variant="link"
-            onClick={() => {
-              router.push("/register");
-            }}
-          >
-            Didn't Register? Register Now
+          <Button type="button" variant="link" asChild>
+            <Link href={"register"}>Didn't Register? Register Now</Link>
           </Button>
         </div>
       </form>

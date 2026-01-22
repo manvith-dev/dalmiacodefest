@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${mont.variable} ${mont_alt.variable} antialiased`}>
         {children}
-        <Toaster />
+        <Toaster position="top-right" />
       </body>
     </html>
   );

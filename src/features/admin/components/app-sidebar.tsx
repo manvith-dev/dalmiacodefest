@@ -41,6 +41,11 @@ const items = [
     url: "/admin/winners/round2",
     icon: Trophy,
   },
+  {
+    title: "Round 3 Winners",
+    url: "/admin/winners/round3",
+    icon: Trophy,
+  },
 ];
 
 export function AppSidebar() {

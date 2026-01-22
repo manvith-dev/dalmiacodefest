@@ -8,8 +8,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 import HavingProblems from "@/features/auth/components/HavingProblems";
-import Image from "next/image";
-import iconPattern from "@/assets/iconPattern.png";
+import Link from "next/link";
 
 export type LoginFormValues = {
   regiId: string;
@@ -18,14 +17,7 @@ export type LoginFormValues = {
 
 export default function LoginPage() {
   return (
-    <main className="flex">
-      <section className="bg-secondary hidden sm:flex flex-1 border">
-        <Image
-          src={iconPattern}
-          alt="random patterns"
-          className="object-cover opacity-70"
-        />
-      </section>
+    <main className="flex items-center justify-center">
       <section className="flex flex-col flex-1 border min-h-screen items-center justify-center p-4 gap-6">
         <HavingProblems />
         <LoginForm />
@@ -120,15 +112,8 @@ function LoginForm() {
             {loading && <Spinner className="mr-2" />}
             Login
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="link"
-            onClick={() => {
-              router.push("/resend-email");
-            }}
-          >
-            Didn't recieve mail?
+          <Button type="button" size="sm" variant="link" asChild>
+            <Link href="/resend-email">Didn't recieve mail?</Link>
           </Button>
         </div>
       </form>

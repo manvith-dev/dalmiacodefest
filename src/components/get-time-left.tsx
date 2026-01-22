@@ -23,7 +23,7 @@ function TimeBlock({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
       <div
-        className="text-3xl font-extrabold tabular-nums"
+        className="text-xl sm:text-3xl font-extrabold tabular-nums"
         suppressHydrationWarning
       >
         {String(value).padStart(2, "0")}
@@ -51,9 +51,9 @@ export default function Timer() {
     <div className="flex flex-col justify-center items-center gap-4 flex-1">
       <H3>Event starts in</H3>
 
-      <div className="rounded-2xl border bg-background/60 px-10 py-8 backdrop-blur">
+      <div className="rounded-2xl border bg-background/60 py-2 px-4 sm:px-10 sm:py-8 backdrop-blur">
         {timeLeft && (
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-4 sm:gap-10">
             <TimeBlock value={timeLeft.days} label="Days" />
             <TimeBlock value={timeLeft.hours} label="Hours" />
             <TimeBlock value={timeLeft.minutes} label="Minutes" />

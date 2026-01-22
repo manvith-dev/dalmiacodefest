@@ -117,9 +117,13 @@ export default function UserAnswerContainer() {
         <div className="space-y-2">
           <H4 className="text-base font-medium">Instructions</H4>
           <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
-            <li>Run the program and observe output</li>
-            <li>Submit the final output here</li>
-            <li>Submit as soon as you are done, time matters!</li>
+            <li>Run the program and observe the output</li>
+            <li>
+              Submit <strong>ONLY the final output</strong> here (do not submit
+              source code)
+            </li>
+            <li>The submitted output must exactly match the expected output</li>
+            <li>Submit as soon as you are done — time matters</li>
             <li className="text-red-300">
               Each incorrect attempt reduces your maximum marks by 1
             </li>
