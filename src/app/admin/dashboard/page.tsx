@@ -17,7 +17,7 @@ export default function AdminDashboardPage() {
           toast.error(data.error || "Couldn't fetch participants count");
           return;
         }
-        setParticipants(data.count - 20);
+        setParticipants(data.count - 50);
       } catch {
         toast.error("Something went wrong");
       }
