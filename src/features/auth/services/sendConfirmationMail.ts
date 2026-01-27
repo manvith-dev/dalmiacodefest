@@ -61,8 +61,8 @@ export async function sendConfirmationMail({
         <hr style="border-color: #44475a; margin: 20px 0;" />
 
         <h3 style="color: #8be9fd; margin-bottom: 8px;">Event Details</h3>
-        <p><strong>Date:</strong> 31 January 2026</p>
-        <p><strong>Time:</strong> 9:00 AM – 12:00 PM</p>
+        <p><strong>Date:</strong> 6 February 2026</p>
+        <p><strong>Time:</strong> 9:00 AM onwards</p>
 
         <div style="margin: 24px 0;">
           <a
