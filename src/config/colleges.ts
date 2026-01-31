@@ -28,4 +28,12 @@ export const COLLEGES = [
     value: "vidya-vikas-universal-college",
     label: "Vidya Vikas Universal College",
   },
+  {
+    value: "kandivli-education-societys-bk-shroff-college",
+    label: "Kandivli Education Society's BK Shroff College",
+  },
+  {
+    value: "l-s-raheja-college-of-arts-and-commerce-santacruz",
+    label: "L S Raheja College Of Arts & Commerce Santacruz",
+  },
 ];

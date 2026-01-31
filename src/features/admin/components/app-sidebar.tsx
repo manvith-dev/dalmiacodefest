@@ -32,6 +32,11 @@ const items = [
     icon: List,
   },
   {
+    title: "Participants Details",
+    url: "/admin/participants/details",
+    icon: List,
+  },
+  {
     title: "Round 1 Winners",
     url: "/admin/winners/round1",
     icon: Trophy,
