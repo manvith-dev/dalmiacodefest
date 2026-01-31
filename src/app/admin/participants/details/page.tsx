@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { H2, Lead } from "@/components/Typography";
 import {
   Accordion,
