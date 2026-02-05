@@ -2,27 +2,28 @@ export const revalidate = 0;
 
 import { H2, Lead } from "@/components/Typography";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import Team from "@/models/team.model";
 import dbConnect from "@/lib/db";
 
 export default function ParticipantsDetailsPage() {
   return (
-    <main className="p-8">
+    <main className="p-8 space-y-4">
       <H2>Participants Details</H2>
-      <section className="flex p-4">
-        <ParticipantsDetailsTable />
-      </section>
+      <ParticipantsDetailsTable />
     </main>
   );
 }
 
 async function ParticipantsDetailsTable() {
   let teams;
+
   try {
     await dbConnect();
     teams = await Team.find({
@@ -34,47 +35,42 @@ async function ParticipantsDetailsTable() {
 
   if (!teams) {
     return (
-      <main className="flex justify-center">
-        <Lead>Loading Data...</Lead>
-      </main>
+      <div className="flex justify-center">
+        <Lead>Loading data...</Lead>
+      </div>
     );
   }
 
+  // Flatten teams → players into table rows
+  const rows = teams.flatMap((team) =>
+    team.players.map((player: any) => ({
+      teamName: team.teamName,
+      playerName: player.name,
+      phone: player.phone,
+    })),
+  );
+
   return (
-    <Accordion type="single" collapsible className="w-full space-y-2">
-      {teams.map((team) => (
-        <AccordionItem
-          key={team._id}
-          value={team._id.toString()}
-          className="border rounded-lg bg-card/50"
-        >
-          <AccordionTrigger className="px-4 py-3 text-left">
-            <div>
-              <p className="font-semibold">{team.teamName}</p>
-              <p className="text-sm text-muted-foreground">
-                {team.collegeName}
-              </p>
-            </div>
-          </AccordionTrigger>
+    <div className="border rounded-lg overflow-hidden">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Team Name</TableHead>
+            <TableHead>Participant Name</TableHead>
+            <TableHead>Mobile Number</TableHead>
+          </TableRow>
+        </TableHeader>
 
-          <AccordionContent className="px-4 pb-4 space-y-3">
-            <p className="text-sm">
-              Registration ID:{" "}
-              <span className="font-mono">{team.registrationId}</span>
-            </p>
-
-            <div className="space-y-2">
-              {team.players.map((player: any, idx: number) => (
-                <div key={idx} className="border rounded-md p-3 text-sm">
-                  <p className="font-medium">{player.name}</p>
-                  <p>{player.email}</p>
-                  <p>{player.phone}</p>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+        <TableBody>
+          {rows.map((row, idx) => (
+            <TableRow key={idx}>
+              <TableCell className="font-medium">{row.teamName}</TableCell>
+              <TableCell>{row.playerName}</TableCell>
+              <TableCell className="font-mono">{row.phone}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

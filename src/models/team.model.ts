@@ -29,7 +29,7 @@ const TeamSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Team = mongoose.models.Team || mongoose.model<ITeam>("Team", TeamSchema);

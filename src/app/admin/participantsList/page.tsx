@@ -20,7 +20,7 @@ async function getParticipants() {
 
   // Only fetch teams whose registrationId does NOT start with "REG-"
   return Team.find({ registrationId: { $not: /^REG-/ } })
-    .sort({ createdAt: -1 })
+    .sort({ teamName: 1 })
     .lean();
 }
 
@@ -44,7 +44,8 @@ function TableList({ teams }: { teams: ITeam[] }) {
           <TableHead>#</TableHead>
           <TableHead>Registration ID</TableHead>
           <TableHead>Team Name</TableHead>
-          <TableHead>College Name</TableHead>
+          <TableHead>Player 1</TableHead>
+          <TableHead>Player 2</TableHead>
           <TableHead>Registered On</TableHead>
           <TableHead className="text-right">Attendence</TableHead>
         </TableRow>
@@ -56,11 +57,8 @@ function TableList({ teams }: { teams: ITeam[] }) {
             <TableCell>{index + 1}</TableCell>
             <TableCell className="font-medium">{team.registrationId}</TableCell>
             <TableCell>{team.teamName}</TableCell>
-            <TableCell>
-              {team.collegeName
-                .replace(/-/g, " ")
-                .replace(/\b\w/g, (c) => c.toUpperCase())}
-            </TableCell>
+            <TableCell>{team.players[0].name}</TableCell>
+            <TableCell>{team.players[1].name}</TableCell>
             <TableCell>
               {new Date(team.createdAt).toLocaleDateString()}
             </TableCell>
