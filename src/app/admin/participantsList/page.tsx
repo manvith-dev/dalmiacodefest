@@ -62,7 +62,7 @@ function TableList({ teams }: { teams: ITeam[] }) {
             <TableCell>
               {new Date(team.createdAt).toLocaleDateString()}
             </TableCell>
-            <TableCell className="flex items-center justify-end">
+            <TableCell className="flex items-center justify-center">
               <div className="bg-secondary border p-4 rounded-md"></div>
             </TableCell>
           </TableRow>
