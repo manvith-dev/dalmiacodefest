@@ -70,7 +70,21 @@ export default function TermsAndConditions() {
         data loss, score discrepancies, or disqualification consequences.
       </P>
 
+      <H2>Personal Belongings</H2>
+      <P>
+        Participants are solely responsible for the safety of their personal
+        belongings, including laptops, mobile phones, chargers, bags, and other
+        valuables brought to the event venue. The organizers are not responsible
+        for loss, theft, or damage of personal items under any circumstances.
+      </P>
+      <P>
+        Bringing a laptop is optional and not required for participation in the
+        event. Participants who choose to bring one do so at their own
+        discretion and risk.
+      </P>
+
       <Muted>Rules apply for the duration of the event.</Muted>
+      <Muted>Last updated: 5 February 2026</Muted>
     </div>
   );
 }
