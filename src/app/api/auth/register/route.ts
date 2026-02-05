@@ -5,6 +5,15 @@ import Team from "@/models/team.model";
 import { sendConfirmationMail } from "@/features/auth/services/sendConfirmationMail";
 
 export async function POST(req: NextRequest) {
+  return NextResponse.json(
+    {
+      error: "Registration has ended.",
+    },
+    {
+      status: 410,
+    },
+  );
+
   const body = await req.json();
 
   const errors = validateInputs(body);
@@ -15,7 +24,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 400,
-      }
+      },
     );
   }
 
@@ -39,7 +48,7 @@ export async function POST(req: NextRequest) {
         {
           error: `Team Name ${teamName} already exists. Please try a new one`,
         },
-        { status: 404 }
+        { status: 404 },
       );
 
     const existingContact = await Team.findOne({
@@ -61,7 +70,7 @@ export async function POST(req: NextRequest) {
           error:
             "One of the emails or phone numbers is already registered in another team.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -95,7 +104,7 @@ export async function POST(req: NextRequest) {
       { message: "A confirmation has been sent (IMPORTANT)." },
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     console.log(error);

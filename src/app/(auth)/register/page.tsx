@@ -55,6 +55,10 @@ function RegisterForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
+  async function regiEnded() {
+    toast.error("Registration closed");
+  }
+
   async function submitRegistration() {
     try {
       setLoading(true);
@@ -282,7 +286,7 @@ function RegisterForm() {
                   </Button>
                   <Button
                     className="flex-1"
-                    onClick={submitRegistration}
+                    onClick={regiEnded}
                     disabled={loading}
                   >
                     Confirm & Submit
