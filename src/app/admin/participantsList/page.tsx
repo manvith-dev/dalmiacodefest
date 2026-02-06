@@ -1,7 +1,6 @@
 export const revalidate = 0;
 
 import { H2 } from "@/components/Typography";
-import { ITeam } from "@/models/team.model";
 import {
   Table,
   TableBody,
@@ -35,35 +34,59 @@ export default async function ParticipantsListPage() {
   );
 }
 
-function TableList({ teams }: { teams: ITeam[] }) {
+type TeamLean = {
+  registrationId: string;
+  teamName: string;
+  collegeName: string;
+  players: {
+    name: string;
+    email: string;
+    phone: string;
+  }[];
+  createdAt: Date;
+};
+
+function TableList({ teams }: { teams: TeamLean[] }) {
   return (
-    <Table>
+    <Table className="border-separate border-spacing-y-3">
       <TableCaption>A list of registered participants.</TableCaption>
+
       <TableHeader>
         <TableRow>
-          <TableHead>#</TableHead>
-          <TableHead>Registration ID</TableHead>
           <TableHead>Team Name</TableHead>
-          <TableHead>Player 1</TableHead>
-          <TableHead>Player 2</TableHead>
-          <TableHead>Registered On</TableHead>
-          <TableHead className="text-right">Attendence</TableHead>
+          <TableHead>Player Names</TableHead>
+          <TableHead>Emails</TableHead>
+          <TableHead>Phone Numbers</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
         {teams.map((team, index) => (
           <TableRow key={team.registrationId}>
-            <TableCell>{index + 1}</TableCell>
-            <TableCell className="font-medium">{team.registrationId}</TableCell>
             <TableCell>{team.teamName}</TableCell>
-            <TableCell>{team.players[0].name}</TableCell>
-            <TableCell>{team.players[1].name}</TableCell>
-            <TableCell>
-              {new Date(team.createdAt).toLocaleDateString()}
+
+            <TableCell className="align-top">
+              <div className="flex flex-col gap-1 font-medium max-w-[180px]">
+                {team.players.map((player, i) => (
+                  <span key={i}>{player.name}</span>
+                ))}
+              </div>
             </TableCell>
-            <TableCell className="flex items-center justify-center">
-              <div className="bg-secondary border p-4 rounded-md"></div>
+
+            <TableCell>
+              <div className="flex flex-col gap-1">
+                {team.players.map((player, i) => (
+                  <span key={i}>{player.email}</span>
+                ))}
+              </div>
+            </TableCell>
+
+            <TableCell>
+              <div className="flex flex-col gap-1">
+                {team.players.map((player, i) => (
+                  <span key={i}>{player.phone}</span>
+                ))}
+              </div>
             </TableCell>
           </TableRow>
         ))}

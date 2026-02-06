@@ -286,7 +286,7 @@ function RegisterForm() {
                   </Button>
                   <Button
                     className="flex-1"
-                    onClick={submitRegistration}
+                    onClick={regiEnded}
                     disabled={loading}
                   >
                     Confirm & Submit
