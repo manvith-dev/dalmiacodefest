@@ -5,15 +5,6 @@ import Team from "@/models/team.model";
 import { sendConfirmationMail } from "@/features/auth/services/sendConfirmationMail";
 
 export async function POST(req: NextRequest) {
-  return NextResponse.json(
-    {
-      error: "Registration has ended.",
-    },
-    {
-      status: 410,
-    },
-  );
-
   const body = await req.json();
 
   const errors = validateInputs(body);
