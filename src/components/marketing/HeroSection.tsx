@@ -34,7 +34,7 @@ export default function HeroSection() {
 
       if (distance < 0) {
         clearInterval(interval);
-        setTimeLeft("Event has started!");
+        setTimeLeft("Event has ended!");
         return;
       }
 
