@@ -15,7 +15,7 @@ export async function GET() {
   } catch (err) {
     return NextResponse.json(
       { error: "Failed to fetch participants" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

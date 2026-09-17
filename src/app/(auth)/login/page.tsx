@@ -59,7 +59,7 @@ function LoginForm() {
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
+      if (!res.ok) {  
         toast.error(data.error || "Something went wrong");
         return;
       }

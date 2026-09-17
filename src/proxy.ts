@@ -5,16 +5,14 @@ import { getToken } from "@/features/auth/services/getToken";
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith("/participants")) {
-    const token = getToken(req, "participant_token");
-    const payload = token && validateJwt(token, { teamId: true });
+  // if (pathname.startsWith("/participants")) {
+  //   const token = getToken(req, "participant_token");
+  //   const payload = token && validateJwt(token, { teamId: true });
 
-    if (!payload) {
-      return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    // payload.teamId is now trusted
-  }
+  //   if (!payload) {
+  //     return NextResponse.redirect(new URL("/login", req.url));
+  //   }
+  // }
 
   if (pathname.startsWith("/admin")) {
     const token = getToken(req, "admin_token");

@@ -18,17 +18,17 @@ export default function Contact() {
         <ContactCard
           name="Manvith Poojary"
           role="student"
-          phone="+91 91566 91445"
+          phone="+91 91xxx xxxxx"
         />
         <ContactCard
           name="Priyanshu Pal"
           role="student"
-          phone="+91 90761 89264"
+          phone="+91 90xxx xxxxx"
         />
         <ContactCard
           name="Paras Panchal"
           role="student"
-          phone="+91 84529 18705"
+          phone="+91 84xxx xxxxx"
         />
       </div>
     </section>

@@ -19,12 +19,21 @@ export default function RoundOneWinnersPage() {
   return (
     <main className="flex flex-col items-center gap-6">
       <section className="flex flex-col">
-        <H2>Round 1 Players Ranking</H2>
-        <Muted>{"Based on score and time taken (if score is tied)"}</Muted>
+        <div className="flex items-center gap-3">
+          <H2>Round 1 Players Ranking</H2>
+
+          <span className="text-xs text-muted-foreground border rounded-full px-2.5 py-1">
+            Participant data masked for privacy
+          </span>
+        </div>
+
+        <Muted>Based on score and time taken (if score is tied)</Muted>
       </section>
+
       <LeaderBoardTable />
+
       <section className="flex flex-col">
-        <Muted>{"The leaderboard data is auto-generated."}</Muted>
+        <Muted>The leaderboard data is auto-generated.</Muted>
       </section>
     </main>
   );
@@ -79,16 +88,20 @@ async function LeaderBoardTable() {
                 <TableCell>{index + 1}</TableCell>
 
                 <TableCell className="font-medium">
-                  {team?.registrationId ?? "-"}
+                  {maskRegistrationId(team?.registrationId)}
                 </TableCell>
 
-                <TableCell>{team?.teamName ?? "-"}</TableCell>
+                <TableCell>
+                  {team?.teamName ? maskName(team.teamName) : "-"}
+                </TableCell>
 
                 <TableCell>
                   {team?.collegeName
-                    ? team.collegeName
-                        .replace(/-/g, " ")
-                        .replace(/\b\w/g, (c: string) => c.toUpperCase())
+                    ? maskCollegeName(
+                        team.collegeName
+                          .replace(/-/g, " ")
+                          .replace(/\b\w/g, (c: string) => c.toUpperCase()),
+                      )
                     : "-"}
                 </TableCell>
 
@@ -104,4 +117,32 @@ async function LeaderBoardTable() {
       </Table>
     </section>
   );
+}
+
+function maskRegistrationId(id?: string) {
+  if (!id) return "xxxxxxxx";
+
+  if (id.length <= 4) return "xxxx";
+
+  return `${id.slice(0, 3)}${"x".repeat(id.length - 3)}`;
+}
+
+function maskName(name: string) {
+  if (!name) return "xxxxxxxx";
+
+  return name
+    .trim()
+    .split(" ")
+    .map((part) => {
+      if (part.length <= 2) return "xx";
+
+      return `${part.slice(0, 2)}${"x".repeat(part.length - 2)}`;
+    })
+    .join(" ");
+}
+
+function maskCollegeName(name: string) {
+  if (!name) return "College xxxxx";
+
+  return `College ${"x".repeat(6 + (name.length % 5))}`;
 }

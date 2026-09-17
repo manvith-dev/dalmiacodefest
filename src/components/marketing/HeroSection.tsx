@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Navbar } from "./Navbar";
-import { H1, H2, Lead, Muted, P } from "@/components/Typography";
+import { H1, H2, H3, Lead, Muted, P } from "@/components/Typography";
 import { EVENT } from "@/config/event";
 import {
   Tooltip,
@@ -22,34 +22,8 @@ const Data = {
 };
 
 export default function HeroSection() {
-  const [timeLeft, setTimeLeft] = useState("");
   const eventDate = new Date(EVENT.date);
 
-  useEffect(() => {
-    const eventDate = new Date(EVENT.startAt).getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = eventDate - now;
-
-      if (distance < 0) {
-        clearInterval(interval);
-        setTimeLeft("Event has ended!");
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
   return (
     <div
       className="flex flex-col gap-4 px-8 md:px-16 items-center relative min-h-screen max-w-screen overflow-hidden"
@@ -65,8 +39,8 @@ export default function HeroSection() {
         width={16 * 30}
         height={164}
       />
-      <div className="flex flex-col md:flex-row w-full">
-        <div className="flex flex-1 flex-col gap-6 py-4 md:py-16">
+      <div className="flex flex-col md:flex-row w-full ">
+        <div className="flex flex-1 flex-col gap-6 py-4 md:py-8">
           <div className="flex flex-col gap-1">
             <H1>{EVENT.name}</H1>
             <H2>{EVENT.tagline}</H2>
@@ -125,17 +99,56 @@ export default function HeroSection() {
             />
             <Lead>{"Dalmia Lions I.T. Association"}</Lead>
           </div>
-          <div className="flex items-center border gap-2 p-1 rounded-md ">
-            <Clock className="hidden sm:flex text-primary w-4 h-4" />
-            <P>
-              Event starts in:{" "}
-              <span className="font-semibold text-sm">{timeLeft}</span>
-            </P>
-          </div>
         </div>
       </div>
-      <div className="bg-yellow-300 text-black font-bold w-full text-center shadow-md z-40">
-        Registration ends on 5th February 2026!
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 px-6 py-5 border rounded-lg bg-background/80 backdrop-blur-sm mb-8">
+        <div className="flex flex-col gap-1">
+          <Muted className="uppercase tracking-[0.2em] font-semibold text-xs">
+            The Project
+          </Muted>
+
+          <H3 className="text-xl md:text-2xl border-0 pb-0">
+            DCF has concluded.
+          </H3>
+
+          <P className="text-sm text-muted-foreground">
+            Explore the platform that powered the competition.
+          </P>
+        </div>
+
+        <div className="shrink-0">
+          <Link href={"/project"}>
+            <Button
+              variant="default"
+              className="
+        group relative overflow-hidden
+        bg-yellow-300 text-black
+        border-2 border-yellow-200
+        transition-all duration-300
+        hover:bg-yellow-200
+        hover:shadow-[0_8px_30px_rgba(253,224,71,0.35)]
+        "
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Explore The Project
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+
+              <span
+                className="
+          absolute inset-0
+          -translate-x-full
+          skew-x-12
+          bg-white/30
+          transition-transform duration-700
+          group-hover:translate-x-full
+          "
+              />
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

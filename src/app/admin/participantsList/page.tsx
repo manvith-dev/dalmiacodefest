@@ -1,6 +1,7 @@
 export const revalidate = 0;
 
 import { H2 } from "@/components/Typography";
+
 import {
   Table,
   TableBody,
@@ -28,7 +29,14 @@ export default async function ParticipantsListPage() {
 
   return (
     <main className="flex flex-col gap-4 p-8">
-      <H2>Participants List</H2>
+      <div className="flex items-center gap-3">
+        <H2>Participants List</H2>
+
+        <span className="text-xs text-muted-foreground border rounded-full px-2.5 py-1">
+          Participant data masked for privacy
+        </span>
+      </div>
+
       <TableList teams={teams} />
     </main>
   );
@@ -61,14 +69,14 @@ function TableList({ teams }: { teams: TeamLean[] }) {
       </TableHeader>
 
       <TableBody>
-        {teams.map((team, index) => (
+        {teams.map((team) => (
           <TableRow key={team.registrationId}>
-            <TableCell>{team.teamName}</TableCell>
+            <TableCell>{maskName(team.teamName)}</TableCell>
 
             <TableCell className="align-top">
               <div className="flex flex-col gap-1 font-medium max-w-[180px]">
                 {team.players.map((player, i) => (
-                  <span key={i}>{player.name}</span>
+                  <span key={i}>{maskName(player.name)}</span>
                 ))}
               </div>
             </TableCell>
@@ -76,7 +84,7 @@ function TableList({ teams }: { teams: TeamLean[] }) {
             <TableCell>
               <div className="flex flex-col gap-1">
                 {team.players.map((player, i) => (
-                  <span key={i}>{player.email}</span>
+                  <span key={i}>{maskEmail(player.email)}</span>
                 ))}
               </div>
             </TableCell>
@@ -84,7 +92,7 @@ function TableList({ teams }: { teams: TeamLean[] }) {
             <TableCell>
               <div className="flex flex-col gap-1">
                 {team.players.map((player, i) => (
-                  <span key={i}>{player.phone}</span>
+                  <span key={i}>{maskPhone(player.phone)}</span>
                 ))}
               </div>
             </TableCell>
@@ -93,4 +101,45 @@ function TableList({ teams }: { teams: TeamLean[] }) {
       </TableBody>
     </Table>
   );
+}
+
+function maskName(name: string) {
+  if (!name) return "xxxxxxxx";
+
+  return name
+    .trim()
+    .split(" ")
+    .map((part) => {
+      if (part.length <= 2) return "xx";
+
+      return `${part.slice(0, 2)}${"x".repeat(part.length - 2)}`;
+    })
+    .join(" ");
+}
+
+function maskEmail(email: string) {
+  if (!email) return "xxxxxxxx@xxxx.com";
+
+  const [username, domain] = email.split("@");
+
+  if (!username || !domain) return "xxxxxxxx@xxxx.com";
+
+  const maskedUsername =
+    username.length <= 2
+      ? "xx"
+      : `${username.slice(0, 2)}${"x".repeat(
+          Math.min(username.length - 2, 6),
+        )}`;
+
+  return `${maskedUsername}@${domain}`;
+}
+
+function maskPhone(phone: string) {
+  if (!phone) return "xxxxxx1234";
+
+  const digits = phone.replace(/\D/g, "");
+
+  if (digits.length < 4) return "xxxxxxxxxx";
+
+  return `${"x".repeat(digits.length - 4)}${digits.slice(-4)}`;
 }

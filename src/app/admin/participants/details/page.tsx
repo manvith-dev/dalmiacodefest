@@ -15,7 +15,14 @@ import dbConnect from "@/lib/db";
 export default function ParticipantsDetailsPage() {
   return (
     <main className="p-8 space-y-4">
-      <H2>Participants Details</H2>
+      <div className="flex items-center gap-3">
+        <H2>Participants Details</H2>
+
+        <span className="text-xs text-muted-foreground border rounded-full px-2.5 py-1">
+          Participant data masked for privacy
+        </span>
+      </div>
+
       <ParticipantsDetailsTable />
     </main>
   );
@@ -44,9 +51,9 @@ async function ParticipantsDetailsTable() {
   // Flatten teams → players into table rows
   const rows = teams.flatMap((team) =>
     team.players.map((player: any) => ({
-      teamName: team.teamName,
-      playerName: player.name,
-      phone: player.phone,
+      teamName: maskName(team.teamName),
+      playerName: maskName(player.name),
+      phone: maskPhone(player.phone),
     })),
   );
 
@@ -73,4 +80,28 @@ async function ParticipantsDetailsTable() {
       </Table>
     </div>
   );
+}
+
+function maskName(name: string) {
+  if (!name) return "xxxxxxxx";
+
+  const parts = name.trim().split(" ");
+
+  return parts
+    .map((part) => {
+      if (part.length <= 2) return "xx";
+
+      return `${part.slice(0, 2)}${"x".repeat(part.length - 1)}`;
+    })
+    .join(" ");
+}
+
+function maskPhone(phone: string) {
+  if (!phone) return "••••••••••";
+
+  const digits = phone.replace(/\D/g, "");
+
+  if (digits.length < 4) return "••••••••••";
+
+  return `${"•".repeat(digits.length - 4)}${digits.slice(-4)}`;
 }
